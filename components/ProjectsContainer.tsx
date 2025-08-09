@@ -5,25 +5,13 @@ import {Project} from "@/libs/interfaces";
 import { FaSort } from "react-icons/fa6";
 import {SortProjects} from "@/utils/SortProjects";
 
-const ProjectsContainer = ()=>{
-    const [projects,setProjects] = React.useState<Project[]>([])
-    const [filter,setFilter] = React.useState<string>('')
-    const getProjects = async ()=>{
-        try{
-            const response = await fetch('/api/projects')
-            if(response.ok){
-                const data = await response.json()
-                setProjects(data)
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-    useEffect(()=>{
-        getProjects().then().catch()
-    },[])
+const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProjects:React.Dispatch<React.SetStateAction<Project[]>>})=>{
 
-    SortProjects(projects,filter)
+    const [filter,setFilter] = React.useState<string>('')
+
+    useEffect(()=>{
+        setProjects(prev=>SortProjects([...prev],filter))
+    },[filter])
 
     return (
         <div className={'table-responsive'}>
