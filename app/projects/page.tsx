@@ -72,7 +72,7 @@ const Home = ()=>{
                     <span className="d-none d-sm-inline">{cardView ? "Table View" : "Card View"}</span>
                 </button>
             </div>
-            {cardView?<CardViewProjects projects={projects} setProjects={setProjects}></CardViewProjects>:<ProjectsContainer projects={projects} setProjects={setProjects}></ProjectsContainer>}
+            {cardView?<CardViewProjects projects={projects!} setProjects={setProjects as React.Dispatch<React.SetStateAction<Project[]>>}></CardViewProjects>:<ProjectsContainer projects={projects} setProjects={setProjects as React.Dispatch<React.SetStateAction<Project[]>>}></ProjectsContainer>}
         </div>
 
     )
