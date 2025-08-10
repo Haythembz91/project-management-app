@@ -2,6 +2,7 @@
 import React from "react";
 import {useRouter} from "next/navigation";
 import {statusList} from "@/libs/const";
+import FetchWithAuth from "@/utils/FetchWithAuth";
 
 const AddProjectForm = ()=>{
 
@@ -21,20 +22,27 @@ const AddProjectForm = ()=>{
             return
         }
         try{
-            const response = await fetch('/api/projects/create',{
+            const response = await FetchWithAuth('/api/projects/create',{
                 method:'POST',
                 body:formData
             })
             if(!response.ok){
+                if(response.status===401){
+                    setIsLoading(false)
+                    setError('Session expired, you will be redirected to login page')
+                    setTimeout(()=>{
+                        router.push('/auth/login')
+                    },2000)
+                    return
+                }
                 const error = await response.json()
                 setError(error.error)
                 setIsLoading(false)
                 return
             }
-            const data = await response.json()
             setError('')
-            router.push('/projects/'+data.id)
-
+            const data = await response.json()
+            router.push(`/projects/${data.projectId}`)
         }catch(error){
             console.log(error)
         }finally {
@@ -47,7 +55,7 @@ const AddProjectForm = ()=>{
             <h1 className={'h1 mb-3'}>Add Project:</h1>
             <form onSubmit={handleProjectSubmit} className={'col-md-6'}>
                 <div className="form-floating mb-3">
-                    <input required type="text" name={'projectName'} className="form-control" id="projectName" placeholder="projectName"/>
+                    <input required  type="text" name={'projectName'} className="form-control" id="projectName" placeholder="projectName"/>
                     <label htmlFor="projectName">Project&apos;s name</label>
                 </div>
                 <div className="form-floating mb-3">

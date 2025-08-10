@@ -14,14 +14,14 @@ export async function POST(req:NextRequest){
         user = await GetUserFromCookies(tokens.ACCESS_TOKEN)
     }catch(error){
         console.log(error)
-        return NextResponse.json({error:"Unauthorized"},{status:500})
+        return NextResponse.json({error:"Unauthorized"},{status:401})
     }
     let formData = new FormData()
     try{
         formData = await req.formData()
     }catch(error){
         console.log(error)
-        return NextResponse.json({error:"malformed request"},{status:500})
+        return NextResponse.json({error:"malformed request"},{status:400})
     }
     if([...formData].length===0) {
         return NextResponse.json({error: "empty request"}, {status: 400})

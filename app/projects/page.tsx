@@ -7,17 +7,27 @@ import {Project} from "@/libs/interfaces";
 import CardViewProjects from "@/components/CardViewProjects";
 import { MdTableRows } from "react-icons/md";
 import { MdViewModule } from "react-icons/md";
+import FetchWithAuth from "@/utils/FetchWithAuth";
 const Home = ()=>{
 
-    const [projects,setProjects] = React.useState<Project[]>([])
+    const [projects,setProjects] = React.useState<Project[]|null>(null)
     const [cardView,setCardView] = React.useState<boolean>(false)
     const getProjects = async ()=>{
         try{
-            const response = await fetch('/api/projects')
-            if(response.ok){
+            const response = await FetchWithAuth('/api/projects',{
+                method:'GET',
+            })
+            if(!response.ok){
+                if(response.status===401){
+                    window.location.href = '/auth/login'
+                    return
+                }
                 const data = await response.json()
-                setProjects(data)
+                console.log(data)
+                return
             }
+            const data = await response.json()
+            setProjects(data)
         }catch(err){
             console.log(err)
         }
@@ -26,6 +36,25 @@ const Home = ()=>{
         getProjects().then().catch()
     },[])
 
+    if(!projects){
+        return (
+            <div className={'d-flex justify-content-center my-5'}>
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        )
+    }
+    if(projects.length===0){
+        return (
+                <div className={'d-flex justify-content-between p-3'}>
+                    <p className={'h4 mx-2'}>No projects found</p>
+                    <Link className={'btn btn-outline-dark'} href={'/projects/create'}>
+                        <IoMdAdd /> Add project
+                    </Link>
+                </div>
+        )
+    }
     return (
         <div className={'container-fluid mt-3'}>
             <div className={'d-flex justify-content-end'}>

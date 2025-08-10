@@ -1,25 +1,14 @@
+import FetchWithAuth from "@/utils/FetchWithAuth";
+import {User} from "@/libs/interfaces";
+
 const GetUser = async ()=>{
     try{
-        const response = await fetch ('/api/auth/user',{
-            method:'GET',
-            credentials:'include'
+        const response =  await FetchWithAuth('/api/auth/user',{
+            method:'GET'
         })
-        if(!response.ok){
-            try{
-                const response = await fetch('/api/auth/refresh', {
-                    method:'POST',
-                    credentials:'include'
-                })
-                if(!response.ok){
-                    return null
-                }
-                return await response.json()
-            }catch(err){
-                console.log(err)
-                return null
-            }
+        if(response.ok){
+            return await response.json()
         }
-        return await response.json()
     }catch(err){
         console.log(err)
         return null
