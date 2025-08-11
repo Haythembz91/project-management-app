@@ -18,3 +18,9 @@ export enum status {
     ON_HOLD = 'on_hold',
     CANCELLED = 'cancelled'
 }
+
+export enum priorities {
+    HIGH = 'high',
+    MEDIUM = 'medium',
+    LOW = 'low'
+}

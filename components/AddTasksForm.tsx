@@ -1,15 +1,58 @@
 'use client'
-import {statusList} from "@/libs/const";
+import {priorityList, statusList} from "@/libs/const";
 import React from "react";
+import FetchWithAuth from "@/utils/FetchWithAuth";
+import {useRouter} from "next/navigation";
 
 const AddTasksForm = ({id}:{id:string})=>{
 
     const [error, setError] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
     const [progress, setProgress] = React.useState(0)
-    const handleTaskSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
+    const router = useRouter()
+    const handleTaskSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-        console.log('task submitted')
+        setIsLoading(true)
+        setError('')
+        const formData = new FormData(e.currentTarget)
+        formData.append('projectId',id)
+        const taskStartDate = new Date(formData.get('taskStartDate') as string).getTime()
+        const taskDueData = new Date(formData.get('taskDueDate') as string).getTime()
+        if(taskDueData<taskStartDate){
+            setError('Start date must be before end date')
+            setIsLoading(false)
+            return
+        }
+        try{
+            const response = await FetchWithAuth('/api/projects/tasks/create',{
+                method:'POST',
+                body:formData
+            })
+            if(!response.ok){
+                if(response.status===401){
+                    setIsLoading(false)
+                    setError('Session expired, you will be redirected to login page')
+                    setTimeout(()=>{
+                        window.location.href = '/auth/login'
+                    },2000)
+                    return
+                }
+                const error = await response.json()
+                setError(error.error)
+                setIsLoading(false)
+                return
+            }
+            const data = await response.json()
+            setError('')
+            router.push(`/projects/${id}`)
+            console.log(data)
+        }catch(error){
+            console.log(error)
+            setError('Internal server error')
+            return
+        }finally {
+            setIsLoading(false)
+        }
     }
     return (
         <div className={'container-fluid'}>
@@ -28,7 +71,12 @@ const AddTasksForm = ({id}:{id:string})=>{
                     <label htmlFor="assignedTo">Assigned to</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input required type="text" name={'taskPriority'} className="form-control" id="taskPriority" placeholder="taskPriority"/>
+                    <select defaultValue={''} required name={'taskPriority'} className="form-control" id="taskPriority">
+                        <option value={''} disabled >Select priority</option>
+                        {priorityList.map((priority,index)=>
+                            <option key={index} value={priority}>{priority}</option>
+                        )}
+                    </select>
                     <label htmlFor="taskPriority">Task&apos;s priority</label>
                 </div>
                 <div className="form-floating mb-3">

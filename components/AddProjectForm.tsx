@@ -45,6 +45,7 @@ const AddProjectForm = ()=>{
             router.push(`/projects/${data.projectId}`)
         }catch(error){
             console.log(error)
+            setError('Internal server error')
         }finally {
             setIsLoading(false)
         }
