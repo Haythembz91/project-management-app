@@ -42,10 +42,8 @@ const AddTasksForm = ({id}:{id:string})=>{
                 setIsLoading(false)
                 return
             }
-            const data = await response.json()
             setError('')
             router.push(`/projects/${id}`)
-            console.log(data)
         }catch(error){
             console.log(error)
             setError('Internal server error')
@@ -90,7 +88,7 @@ const AddTasksForm = ({id}:{id:string})=>{
                 </div>
                 <div className="mb-3">
                     <label className={'form-label'} htmlFor="taskProgress">Task&apos;s progress: {progress}%</label>
-                    <input required onChange={(e)=>setProgress(parseInt(e.target.value))} type="range" min={0} max={100} step={1} name={'taskProgress'} className="form-range" id="taskProgress" placeholder="taskProgress"/>
+                    <input required onChange={(e)=>setProgress(parseInt(e.target.value))} type="range" defaultValue={0} min={0} max={100} step={1} name={'taskProgress'} className="form-range" id="taskProgress" placeholder="taskProgress"/>
                     <div className={'d-flex justify-content-between'}><span>0%</span><span>100%</span></div>
                 </div>
                 <div className="form-floating mb-3">

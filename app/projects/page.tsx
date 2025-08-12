@@ -7,33 +7,18 @@ import {Project} from "@/libs/interfaces";
 import CardViewProjects from "@/components/CardViewProjects";
 import { MdTableRows } from "react-icons/md";
 import { MdViewModule } from "react-icons/md";
-import FetchWithAuth from "@/utils/FetchWithAuth";
+import GetProject from "@/utils/GetProject";
 const Home = ()=>{
 
     const [projects,setProjects] = React.useState<Project[]|null>(null)
     const [cardView,setCardView] = React.useState<boolean>(false)
-    const getProjects = async ()=>{
-        try{
-            const response = await FetchWithAuth('/api/projects',{
-                method:'GET',
-            })
-            if(!response.ok){
-                if(response.status===401){
-                    window.location.href = '/auth/login'
-                    return
-                }
-                const data = await response.json()
-                console.log(data)
-                return
-            }
-            const data = await response.json()
-            setProjects(data)
-        }catch(err){
-            console.log(err)
-        }
-    }
+
     useEffect(()=>{
-        getProjects().then().catch()
+        const getProjects = async ()=>{
+            const p = await GetProject({id:''})
+            setProjects(p)
+        }
+        getProjects().catch(console.error)
     },[])
 
     if(!projects){
