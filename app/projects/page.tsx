@@ -54,10 +54,10 @@ const Home = ()=>{
                     onClick={() => setCardView((prev) => !prev)}
                     aria-label={cardView ? "Switch to table view" : "Switch to card view"}>
                     {cardView ? <MdTableRows size={20} /> : <MdViewModule size={20} />}
-                    <span className="d-none d-sm-inline">{cardView ? "Table View" : "Card View"}</span>
+                    <span className="d-none d-sm-inline">{cardView ? "Switch to Table View" : "Switch to Card View"}</span>
                 </button>
             </div>
-            {cardView?<CardViewProjects projects={projects!} setProjects={setProjects as React.Dispatch<React.SetStateAction<Project[]>>}></CardViewProjects>:<ProjectsContainer projects={projects} setProjects={setProjects as React.Dispatch<React.SetStateAction<Project[]>>}></ProjectsContainer>}
+            {cardView?<CardViewProjects projects={projects!}></CardViewProjects>:<ProjectsContainer projects={projects} setProjects={setProjects as React.Dispatch<React.SetStateAction<Project[]>>}></ProjectsContainer>}
         </div>
 
     )

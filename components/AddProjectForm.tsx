@@ -42,7 +42,7 @@ const AddProjectForm = ()=>{
             }
             setError('')
             const data = await response.json()
-            router.push(`/projects/${data.projectId}`)
+            router.push(`/projects/${data.id}`)
         }catch(error){
             console.log(error)
             setError('Internal server error')

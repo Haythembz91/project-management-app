@@ -61,7 +61,7 @@ const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProject
                                 {project.name}
                             </Link>
                         </td>
-                        <td>{project.description}</td>
+                        <td className={'description-cell'}>{project.description}</td>
                         <td>{project.site}</td>
                         <td>{project.client}</td>
                         <td>{project.manager}</td>

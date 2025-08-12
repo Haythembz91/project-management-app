@@ -1,3 +1,9 @@
 th.project-table-th{
     cursor: pointer;
 }
+
+td.description-cell {
+    max-width: 300px;
+    white-space: normal; /* allow wrapping */
+    word-break: break-word; /* break long words */
+}

@@ -7,11 +7,14 @@ import GetProject from "@/utils/GetProject";
 import { IoArrowBackOutline } from "react-icons/io5";
 import {Project, Task} from "@/libs/interfaces";
 import TasksTableView from "@/components/TasksTableView";
+import {MdTableRows, MdViewModule} from "react-icons/md";
+import CardViewTasks from "@/components/CardViewTasks";
 
 const Home = ()=>{
     const {slug} = useParams()
     const [project,setProject] = React.useState<Project|null>(null)
     const [tasks,setTasks] = React.useState<Task[]|null>(null)
+    const [cardView,setCardView] = React.useState<boolean>(false)
     console.log(project,tasks)
     useEffect(()=>{
         const getProject = async ()=>{
@@ -81,8 +84,17 @@ const Home = ()=>{
                     <IoMdAdd /> Add task
                 </Link>
             </div>
+            <div>
+                <button
+                    className="btn btn-outline-dark d-flex align-items-center gap-2"
+                    onClick={() => setCardView((prev) => !prev)}
+                    aria-label={cardView ? "Switch to table view" : "Switch to card view"}>
+                    {cardView ? <MdTableRows size={20} /> : <MdViewModule size={20} />}
+                    <span className="d-none d-sm-inline">{cardView ? "Switch to Table View" : "Switch to Card View"}</span>
+                </button>
+            </div>
             <div className={'mb-3'}>
-                <TasksTableView tasks={tasks}></TasksTableView>
+                {!cardView?<TasksTableView tasks={tasks}></TasksTableView>:<CardViewTasks tasks={tasks}></CardViewTasks>}
             </div>
             <div>
                 <p className={'m-0'}>Last updated: {new Date(project.updated_at).toLocaleDateString()}</p>
