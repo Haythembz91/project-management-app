@@ -1,5 +1,5 @@
-import {Task} from "@/libs/interfaces";
 
+import {Task} from "@/libs/interfaces";
 
 const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
 
@@ -13,7 +13,6 @@ const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
 
     return(
         <div className={'table-responsive'}>
-            <h3>Tasks:</h3>
             <table className={'table table-striped table-hover table-bordered'}>
                 <thead>
                     <tr>
@@ -23,7 +22,7 @@ const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
                         <th>Priority</th>
                         <th>Progress</th>
                         <th>Status</th>
-                        <th>Assigned To</th>
+                        <th>Assigned to</th>
                         <th>Start Date</th>
                         <th>Due Date</th>
                     </tr>

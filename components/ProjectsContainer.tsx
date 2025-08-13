@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, {useEffect} from "react";
 import {Project} from "@/libs/interfaces";
-import { FaSort } from "react-icons/fa6";
+import { BiSort } from "react-icons/bi";
 import {SortProjects} from "@/utils/SortProjects";
 
 const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProjects:React.Dispatch<React.SetStateAction<Project[]>>})=>{
@@ -21,42 +21,132 @@ const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProject
                     <th className={'project-table-th'}>#</th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'name') setFilter('name-desc'); else setFilter('name');
-                    }}>Name <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Name
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'}>Description</th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'site') setFilter('site-desc'); else setFilter('site');
-                    }}>Site <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Location
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'client') setFilter('client-desc'); else setFilter('client');
-                    }}>Client <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Client
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'manager') setFilter('manager-desc'); else setFilter('manager');
-                    }}>Project Manager <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Project Manager
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'start_date') setFilter('start_date-desc'); else setFilter('start_date');
-                    }}>Start Date <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Start Date
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'end_date') setFilter('end_date-desc'); else setFilter('end_date');
-                    }}>End Date <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                End Date
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'status') setFilter('status-desc'); else setFilter('status');
-                    }}>Status <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Status
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=> {
                         if (filter === 'budget') setFilter('budget-desc'); else setFilter('budget');
-                    }}>Budget <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Budget
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'created_at') setFilter('created_at-desc'); else setFilter('created_at');
-                    }}>Created At <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Created At
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                     <th className={'project-table-th'} onClick={()=>{
                         if (filter === 'updated_at') setFilter('updated_at-desc'); else setFilter('updated_at');
-                    }}>Updated At <FaSort /></th>
+                    }}>
+                        <div className={'d-flex justify-content-between'}>
+                            <div>
+                                Updated At
+                            </div>
+                            <div>
+                                <BiSort />
+                            </div>
+                        </div>
+                    </th>
                 </tr>
                 </thead>
                 <tbody className={'table-group-divider'}>
                 {projects.map((project,index)=>(
                     <tr key={project.id}>
                         <td>{index+1}</td>
-                        <td>
+                        <td className={'name-cell'}>
                             <Link href={'/projects/'+project.id} className={'text-dark fw-semibold'}>
                                 {project.name}
                             </Link>

@@ -84,7 +84,8 @@ const Home = ()=>{
                     <IoMdAdd /> Add task
                 </Link>
             </div>
-            <div>
+            <div className={'mb-3'}>
+                <h3 className={'h3 mb-3'}>Tasks:</h3>
                 <button
                     className="btn btn-outline-dark d-flex align-items-center gap-2"
                     onClick={() => setCardView((prev) => !prev)}

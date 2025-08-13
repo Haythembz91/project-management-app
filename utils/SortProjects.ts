@@ -82,6 +82,9 @@ export const SortProjects = (projects:Project[],filter:string)=>{
             projects.sort((a,b)=>b.site.localeCompare(a.site))
             break
         }
+        default:{
+            break
+        }
     }
     return projects
 }
