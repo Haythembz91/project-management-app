@@ -11,7 +11,7 @@ import GetProject from "@/utils/GetProject";
 const Home = ()=>{
 
     const [projects,setProjects] = React.useState<Project[]|null>(null)
-    const [cardView,setCardView] = React.useState<boolean>(false)
+    const [cardView,setCardView] = React.useState<boolean>(true)
 
     useEffect(()=>{
         const getProjects = async ()=>{

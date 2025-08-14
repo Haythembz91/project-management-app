@@ -23,7 +23,7 @@ const CardViewTasks = ({tasks}:{tasks:Task[]|null})=>{
                             <span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span>
                         </div>
                         <h6 className="card-subtitle mb-2 text-body-secondary">{task.description}</h6>
-                        <p className="card-text my-1 border-top">Progress: {task.progress}%</p>
+                        <p className="card-text my-1 border-top">Progress: {Math.round(task.progress)}%</p>
                         <p className="card-text my-1 border-top">Assigned to: {task.assigned_to}</p>
                         <p className="card-text my-1 border-top">Start: {new Date(task.task_start_date).toLocaleDateString()}</p>
                         <p className="card-text my-1 border-top">Due: {new Date(task.task_due_date).toLocaleDateString()}</p>

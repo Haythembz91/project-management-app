@@ -53,6 +53,9 @@ const Header = ()=>{
                                     <Link className={'nav-link'} href={'/projects'}>Projects</Link>
                                 </li>
                                 <li className={'nav-item'}>
+                                    <Link className={'nav-link'} href={'/tasks'}>Tasks</Link>
+                                </li>
+                                <li className={'nav-item'}>
                                     <Link className={'nav-link'} href={'/reports'}>Reports</Link>
                                 </li>
                                 <li className={'nav-item'}>
