@@ -15,7 +15,6 @@ const Home = ()=>{
     const [project,setProject] = React.useState<Project|null>(null)
     const [tasks,setTasks] = React.useState<Task[]|null>(null)
     const [cardView,setCardView] = React.useState<boolean>(true)
-    console.log(project,tasks)
     useEffect(()=>{
         const getProject = async ()=>{
             const p = await GetProject({id:slug as string})

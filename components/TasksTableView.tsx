@@ -1,5 +1,6 @@
 
 import {Task} from "@/libs/interfaces";
+import Link from "next/link";
 
 const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
 
@@ -30,7 +31,11 @@ const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
                 <tbody>
                     {tasks?.map((task,index)=>(<tr key={task.id}>
                         <td>{index+1}</td>
-                        <td>{task.name}</td>
+                        <td>
+                            <Link className={'text-dark fw-semibold'} href={`/tasks/${task.id}`}>
+                                {task.name}
+                            </Link>
+                        </td>
                         <td>{task.description}</td>
                         <td>{task.priority}</td>
                         <td>{Math.round(task.progress)}%</td>
