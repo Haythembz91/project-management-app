@@ -21,3 +21,18 @@ td.name-cell {
     white-space: normal;
     word-break: break-word;
 }
+
+.grdbtn{
+    background:linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89));
+    border-radius:10px;
+    border: none    ;
+    padding: 15px;
+    color:white;
+    text-align: center;
+}
+
+.bfsdftn{
+    background:linear-gradient(135deg, rgb(106, 159, 250) 20%, rgb(35, 126, 231));
+    border:none!important;
+    color:white!important;
+}

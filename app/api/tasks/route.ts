@@ -15,6 +15,11 @@ export async function GET (req:NextRequest){
         return NextResponse.json({error:"Unauthorized"},{status:401})
     }
     try{
+        const id = req.nextUrl.searchParams.get('id') as string
+        if(id){
+            const task = await pool.query('SELECT t.*,p.name AS project_name FROM tasks t JOIN projects p ON t.project_id = p.id WHERE p.user_id = $1 AND t.id = $2', [user.id,id])
+            return NextResponse.json(task.rows[0])
+        }
         const from = req.nextUrl.searchParams.get('from') as string
         const to = req.nextUrl.searchParams.get('to') as string
         const tasks = await pool.query('SELECT t.*,p.name AS project_name FROM tasks t JOIN projects p ON t.project_id = p.id WHERE p.user_id = $1 AND t.task_start_date >= $2 AND t.task_start_date <= $3 ORDER BY t.task_start_date DESC', [user.id,from,to])

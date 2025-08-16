@@ -1,4 +1,4 @@
-import {status} from "@/libs/enums";
+import {priorities, status} from "@/libs/enums";
 
 export interface User {
     id: string;
@@ -26,7 +26,7 @@ export interface Project {
 export interface Task {
     name:string;
     description:string;
-    priority:string;
+    priority:priorities;
     progress:number;
     status:status;
     assigned_to:string;

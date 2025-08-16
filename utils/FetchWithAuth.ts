@@ -1,11 +1,12 @@
 
 
 const FetchWithAuth = async (url:string,options:RequestInit)=>{
+
         const response = await fetch(url, {credentials:'include',...options})
         if(!response.ok){
             if(response.status===401){
                 try{
-                    const refreshResponse = await fetch('/api/auth/refresh',{
+                    const refreshResponse = await fetch(`/api/auth/refresh`,{
                         method:'POST',
                         credentials:'include'
                     })
