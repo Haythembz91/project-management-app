@@ -17,10 +17,23 @@ const CardViewProjects = ({projects}:{projects:Project[]})=>{
                                 <h5 className="card-title fw-semibold">{project.name}</h5>
                                 <span className={'badge'+' '+statusColor(project.status as status)}>{project.status}</span>
                             </div>
-                            <h6 className="card-subtitle mb-2 text-body-secondary">{project.description}</h6>
+                            <div className={'row row-cols-2'}>
+                                <div className={'col'}>
+                                    <p className="card-text my-0 text-secondary">Start: </p>
+                                    <p className="card-text my-0">{new Date(project.start_date).toLocaleDateString()}</p>
+                                </div>
+                                <div className={'col'}>
+                                    <p className="card-text my-0 text-secondary">Due: </p>
+                                    <p className="card-text my-0">{new Date(project.end_date).toLocaleDateString()}</p>
+                                </div>
+                            </div>
                             <p className="card-text my-1 border-top">Manager: {project.manager}</p>
                             <p className="card-text my-1 border-top">Location: {project.site}</p>
                             <p className="card-text my-1 border-top">Budget: ${project.budget}</p>
+                            <div className={'border-top'}>
+                                <p className="card-subtitle my-0 fw-semibold">Description:</p>
+                                <h6 className="card-subtitle mb-2 text-body-secondary">{project.description}</h6>
+                            </div>
                         </div>
                     </Link>
                 </div>

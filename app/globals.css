@@ -36,3 +36,11 @@ td.name-cell {
     border:none!important;
     color:white!important;
 }
+
+.backBtn{
+    all: unset;
+}
+
+.backBtn:hover{
+    text-decoration: underline;
+}

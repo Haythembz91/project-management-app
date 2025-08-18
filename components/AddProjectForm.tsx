@@ -3,6 +3,7 @@ import React from "react";
 import {useRouter} from "next/navigation";
 import {statusList} from "@/libs/const";
 import FetchWithAuth from "@/utils/FetchWithAuth";
+import {IoArrowBackOutline} from "react-icons/io5";
 
 const AddProjectForm = ()=>{
 
@@ -53,6 +54,9 @@ const AddProjectForm = ()=>{
 
     return (
         <div className={'container-fluid'}>
+            <div className={'my-3'}>
+                <button className={'backBtn'} onClick={()=>router.back()}><IoArrowBackOutline /> Back</button>
+            </div>
             <h1 className={'h1 mb-3'}>Add Project:</h1>
             <form onSubmit={handleProjectSubmit} className={'col-md-6'}>
                 <div className="form-floating mb-3">

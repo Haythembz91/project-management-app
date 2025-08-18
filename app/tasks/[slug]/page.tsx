@@ -6,6 +6,8 @@ import {Task} from "@/libs/interfaces";
 import {IoArrowBackOutline} from "react-icons/io5";
 import Link from "next/link";
 import {priorityIcon} from "@/utils/PriorityIcon";
+import {statusColor} from "@/utils/StatusColor";
+import {status} from "@/libs/enums";
 
 const Home = ()=>{
 
@@ -62,7 +64,9 @@ const Home = ()=>{
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>
                 <p className={'col'}>Description: {task.description}</p>
                 <p className={'col'}>Priority: {priorityIcon(task.priority)} {task.priority}</p>
-                <p className={'col'}>Status: {task.status}</p>
+                <div className={'col'}>
+                    <p className={'m-0'}>Status: <span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span></p>
+                </div>
                 <p className={'col'}>Assigned to: {task.assigned_to}</p>
                 <p className={'col'}>Start date: {new Date(task.task_start_date).toLocaleDateString()}</p>
                 <p className={'col'}>Due date: {new Date(task.task_due_date).toLocaleDateString()}</p>
