@@ -13,6 +13,7 @@ export async function GET (){
 }
 
 export async function POST (){
+
     const cookieStore = await cookies();
     const authToken = cookieStore.get(tokens.REFRESH_TOKEN)?.value
     if(!authToken){
@@ -24,7 +25,7 @@ export async function POST (){
         const accessToken = jwt.sign({userId:user.id},process.env.JWT_SECRET as string,{expiresIn:'15m'})
         const hashedRefreshToken = await bcrypt.hash(refreshToken,10)
         await pool.query("UPDATE refresh_tokens SET hashed_token = $1 WHERE user_id = $2", [hashedRefreshToken,user.id])
-        const response = NextResponse.json(user,{status:200});
+        const response = NextResponse.json({user,accessToken,refreshToken},{status:200});
         return SetAuthCookies(response,accessToken,refreshToken)
     }catch(err){
         console.log(err)

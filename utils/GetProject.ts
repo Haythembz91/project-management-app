@@ -1,21 +1,22 @@
-import FetchWithAuth from "@/utils/FetchWithAuth";
+import {baseUrl} from "@/libs/const";
+import FetchingWithAuth from "@/utils/FetchingWithAuth";
 
 
 const GetProject = async ({id}:{id:string})=>{
-     let url
-     id? url = `/api/projects?id=${id}` : url = `/api/projects`
+
+    const url = `${baseUrl}/api/projects?id=${id}`
     try{
-        const response = await FetchWithAuth(url,{
+        const response = await FetchingWithAuth(url,{
             method:'GET',
+            cache:'no-store'
         })
         if(!response.ok){
             if(response.status===401){
-                window.location.href = '/auth/login'
                 return
             }
             return null
         }
-        return await response.json()
+        return response.json()
     }catch(error){
         console.log(error)
     }

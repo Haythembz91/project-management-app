@@ -5,13 +5,10 @@ import {Project} from "@/libs/interfaces";
 import { BiSort } from "react-icons/bi";
 import {SortProjects} from "@/utils/SortProjects";
 
-const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProjects:React.Dispatch<React.SetStateAction<Project[]>>})=>{
+const ProjectsContainer = ({projects}:{projects:Project[]})=>{
 
     const [filter,setFilter] = React.useState<string>('')
 
-    useEffect(()=>{
-        setProjects(prev=>SortProjects([...prev],filter))
-    },[filter])
 
     return (
         <div className={'table-responsive'}>

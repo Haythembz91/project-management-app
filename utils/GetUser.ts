@@ -1,5 +1,4 @@
 import FetchWithAuth from "@/utils/FetchWithAuth";
-import {User} from "@/libs/interfaces";
 
 const GetUser = async ()=>{
     try{

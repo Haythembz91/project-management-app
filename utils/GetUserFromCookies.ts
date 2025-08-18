@@ -11,6 +11,7 @@ const GetUserFromCookies = async (token:tokens): Promise<User>=>{
 
     const cookieStore = await cookies();
     const authToken = cookieStore.get(token)?.value;
+    console.log(token,authToken)
     const secret = token === tokens.ACCESS_TOKEN ? process.env.JWT_SECRET : process.env.JWT_REFRESH_SECRET
     if(!secret){
         throw new Error('No secret found');

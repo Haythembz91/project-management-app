@@ -3,6 +3,7 @@ import {pool} from "@/utils/db";
 import {tokens} from "@/libs/enums";
 import GetUserFromCookies from "@/utils/GetUserFromCookies";
 import {User} from "@/libs/interfaces";
+import {cookies} from "next/headers";
 
 export async function GET (req:NextRequest){
     let user:User

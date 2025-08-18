@@ -3,6 +3,8 @@ import {priorityList, statusList} from "@/libs/const";
 import React from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
+import {IoArrowBackOutline} from "react-icons/io5";
 
 const AddTasksForm = ({id}:{id:string})=>{
 
@@ -54,6 +56,9 @@ const AddTasksForm = ({id}:{id:string})=>{
     }
     return (
         <div className={'container-fluid'}>
+            <div className={'my-3'}>
+                <button className={'backBtn'} onClick={()=>router.back()}><IoArrowBackOutline /> Back</button>
+            </div>
             <h1 className={'h1 mb-3'}>Add Task:</h1>
             <form onSubmit={handleTaskSubmit} className={'col-md-6'}>
                 <div className="form-floating mb-3">
