@@ -4,6 +4,8 @@ import React, {useEffect} from "react";
 import {Project} from "@/libs/interfaces";
 import { BiSort } from "react-icons/bi";
 import {SortProjects} from "@/utils/SortProjects";
+import {statusColor} from "@/utils/StatusColor";
+import {status} from "@/libs/enums";
 
 const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProjects:React.Dispatch<React.SetStateAction<Project[]>>})=>{
 
@@ -157,7 +159,9 @@ const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProject
                         <td>{project.manager}</td>
                         <td>{new Date(project.start_date).toLocaleDateString()}</td>
                         <td>{new Date(project.end_date).toLocaleDateString()}</td>
-                        <td>{project.status}</td>
+                        <td>
+                            <span className={'badge'+' '+statusColor(project.status as status)}>{project.status}</span>
+                        </td>
                         <td>{project.budget}</td>
                         <td>{new Date(project.created_at).toLocaleDateString()}</td>
                         <td>{new Date(project.updated_at).toLocaleDateString()}</td>

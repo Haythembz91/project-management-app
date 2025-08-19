@@ -1,6 +1,9 @@
 
 import {Task} from "@/libs/interfaces";
 import Link from "next/link";
+import {statusColor} from "@/utils/StatusColor";
+import {status} from "@/libs/enums";
+import {priorityIcon} from "@/utils/PriorityIcon";
 
 const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
 
@@ -37,9 +40,11 @@ const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
                             </Link>
                         </td>
                         <td>{task.description}</td>
-                        <td>{task.priority}</td>
+                        <td>{priorityIcon(task.priority)} {task.priority}</td>
                         <td>{Math.round(task.progress)}%</td>
-                        <td>{task.status}</td>
+                        <td>
+                            <span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span>
+                        </td>
                         <td>{task.assigned_to}</td>
                         <td>{new Date(task.task_start_date).toLocaleDateString()}</td>
                         <td>{new Date(task.task_due_date).toLocaleDateString()}</td>

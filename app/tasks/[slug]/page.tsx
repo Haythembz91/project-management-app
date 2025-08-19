@@ -8,6 +8,7 @@ import Link from "next/link";
 import {priorityIcon} from "@/utils/PriorityIcon";
 import {statusColor} from "@/utils/StatusColor";
 import {status} from "@/libs/enums";
+import NotesContainer from "@/components/NotesContainer";
 
 const Home = ()=>{
 
@@ -78,6 +79,7 @@ const Home = ()=>{
                     <p className={'my-0'}>{Math.round(task.progress)}% complete</p>
                 </div>
             </div>
+            <NotesContainer></NotesContainer>
             <button className={'grdbtn'}>Update task</button>
         </div>
     )
