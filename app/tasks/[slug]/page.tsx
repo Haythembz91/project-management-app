@@ -2,7 +2,7 @@
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import React, {useEffect} from "react";
 import {useParams} from "next/navigation";
-import {Task} from "@/libs/interfaces";
+import {Note, Task} from "@/libs/interfaces";
 import {IoArrowBackOutline} from "react-icons/io5";
 import Link from "next/link";
 import {priorityIcon} from "@/utils/PriorityIcon";
@@ -14,6 +14,7 @@ const Home = ()=>{
 
     const {slug} = useParams()
     const [task,setTask] = React.useState<Task|null>(null)
+    const [notes,setNotes] = React.useState<Note[]|null>(null)
 
     const getTask = async()=>{
         try{
@@ -28,7 +29,29 @@ const Home = ()=>{
                 return
             }
             const data = await response.json()
-            setTask(data)
+            setTask(data.task)
+            setNotes(data.notes)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const handlePost = async(e: React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault()
+        try{
+            const response = await FetchWithAuth('/api/notes',{
+                method:'POST',
+            })
+            if(!response.ok){
+                if(response.status===401){
+                    window.location.href = '/auth/login'
+                    return
+                }
+                console.error(response.statusText)
+                return
+            }
+            const data = await response.json()
+            console.log(data)
         }catch(error){
             console.log(error)
         }
@@ -52,7 +75,7 @@ const Home = ()=>{
     }
 
     return (
-        <div className={'container-fluid'}>
+        <section className={'container-fluid'}>
             <div className={'mb-3'}>
                 <Link href={'/projects/' + task.project_id}>
                     <IoArrowBackOutline /> Back to project page
@@ -79,9 +102,20 @@ const Home = ()=>{
                     <p className={'my-0'}>{Math.round(task.progress)}% complete</p>
                 </div>
             </div>
-            <NotesContainer></NotesContainer>
-            <button className={'grdbtn'}>Update task</button>
-        </div>
+            <div className={'my-3'}>
+                <h3 className={'mb-3'}>Notes:</h3>
+                <NotesContainer notes={notes}></NotesContainer>
+                <div>
+                    <form onSubmit={handlePost} className="mb-3 col-md-5">
+                        <div className={'mb-3'}>
+                            <label htmlFor="note" className="form-label">Add note:</label>
+                            <textarea className="form-control" id="note" rows={3}></textarea>
+                        </div>
+                        <button type="submit" className="btn btn-outline-dark w-100">Post</button>
+                    </form>
+                </div>
+            </div>
+        </section>
     )
 }
 

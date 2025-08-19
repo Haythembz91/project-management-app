@@ -48,3 +48,13 @@ export interface GanttTask {
     dependencies: string;
     project_id: string;
 }
+
+export interface Note{
+    id:string;
+    task_id:string;
+    text:string;
+    created_at:string;
+    user_id:string;
+    username:string;
+    email:string;
+}
