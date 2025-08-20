@@ -15,6 +15,9 @@ const Home = ()=>{
     const {slug} = useParams()
     const [task,setTask] = React.useState<Task|null>(null)
     const [notes,setNotes] = React.useState<Note[]|null>(null)
+    const [error,setError] = React.useState<string>('')
+    const [isLoading,setIsLoading] = React.useState<boolean>(false)
+    const formRef = React.useRef<HTMLFormElement>(null)
 
     const getTask = async()=>{
         try{
@@ -38,22 +41,36 @@ const Home = ()=>{
 
     const handlePost = async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
+        setError('')
+        setIsLoading(true)
+        const formData = new FormData(e.currentTarget)
+        formData.append('task_id',slug as string)
+        if (!formData.get('text')) {
+            setError('Text is required')
+            setIsLoading(false)
+            return
+        }
         try{
             const response = await FetchWithAuth('/api/notes',{
                 method:'POST',
+                body:formData
             })
             if(!response.ok){
                 if(response.status===401){
                     window.location.href = '/auth/login'
                     return
                 }
-                console.error(response.statusText)
+                const data = await response.json()
+                setError(data.error)
                 return
             }
-            const data = await response.json()
-            console.log(data)
+            setError('')
+            await getTask()
+            formRef.current?.reset()
         }catch(error){
             console.log(error)
+        }finally{
+            setIsLoading(false)
         }
     }
 
@@ -89,7 +106,7 @@ const Home = ()=>{
                 <p className={'col'}>Description: {task.description}</p>
                 <p className={'col'}>Priority: {priorityIcon(task.priority)} {task.priority}</p>
                 <div className={'col'}>
-                    <p className={'m-0'}>Status: <span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span></p>
+                    <p>Status: <span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span></p>
                 </div>
                 <p className={'col'}>Assigned to: {task.assigned_to}</p>
                 <p className={'col'}>Start date: {new Date(task.task_start_date).toLocaleDateString()}</p>
@@ -106,12 +123,19 @@ const Home = ()=>{
                 <h3 className={'mb-3'}>Notes:</h3>
                 <NotesContainer notes={notes}></NotesContainer>
                 <div>
-                    <form onSubmit={handlePost} className="mb-3 col-md-5">
+                    <form onSubmit={handlePost} ref={formRef} className="mb-3 col-md-5">
                         <div className={'mb-3'}>
                             <label htmlFor="note" className="form-label">Add note:</label>
-                            <textarea className="form-control" id="note" rows={3}></textarea>
+                            <textarea name={'text'} className="form-control" id="note" rows={3}></textarea>
                         </div>
-                        <button type="submit" className="btn btn-outline-dark w-100">Post</button>
+                        {error&&<div className="alert alert-danger mb-3" role="alert">
+                            {error}
+                        </div>}
+                        {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>Post</button>:
+                            <button className="btn btn-outline-dark w-100" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                <span className={'px-1'} role="status">Posting...</span>
+                            </button>}
                     </form>
                 </div>
             </div>

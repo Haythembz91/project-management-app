@@ -9,9 +9,9 @@ const NotesContainer = ({notes}:{notes:Note[]|null})=>{
         <div>
             {notes.map(note=>(<div className={'d-flex'} key={note.id}>
                 <div className={'border-bottom'}>
-                    <div className={'d-flex'}>
-                        <p><FaUser/> {note.username}</p>
-                        <p className={'text-secondary px-1'}>{'(' + note.email + ')' + ' - ' + new Date(note.created_at).toLocaleString()}</p>
+                    <div className={'d-md-flex'}>
+                        <p className={'my-0'}><FaUser/><span className={'px-2'}>{note.username}</span></p>
+                        <p className={'text-secondary ps-3 ps-md-0'}>{'(' + note.email + ')' + ' - ' + new Date(note.created_at).toLocaleString()}</p>
                     </div>
                     <div>
                         <p className={'px-3'}>{note.text}</p>
