@@ -1,7 +1,6 @@
 'use client'
-
+import { FrappeGantt, Task, ViewMode } from '@toyokoh/frappe-gantt-react';
 import React, {useEffect} from "react";
-import {GanttTask, Task} from "@/libs/interfaces";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import dynamic from 'next/dynamic';
 import {useRouter} from "next/navigation";
@@ -20,7 +19,7 @@ const Home =()=>{
     const today = new Date ()
     const sevendays = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
     const [to,setTo] = React.useState<string>(sevendays.toISOString().split('T')[0])
-    const [viewMode,setViewMode] = React.useState<string>('Week')
+    const [viewMode,setViewMode] = React.useState<ViewMode>(ViewMode.WEEK)
     const getTasks = async ()=>{
         try{
             const response = await FetchWithAuth(`/api/tasks?from=${from}&to=${to}`,{
@@ -54,7 +53,7 @@ const Home =()=>{
             </div>
         )
     }
-    const ganttTasks:GanttTask[] = tasks.map(task=>({
+    const ganttTasks:Task = tasks.map(task=>({
         id:task.id,
         name:task.project_name+' : '+task.name,
         project_id:task.project_id,
@@ -88,10 +87,10 @@ const Home =()=>{
                     <option value="Month">Month</option>
                 </select>
             </div>
-            <Gantt
+            <FrappeGantt
                 tasks={ganttTasks}
-                viewMode={viewMode}
-                onClick={(task:GanttTask) => router.push(`projects/${task.project_id}`)}
+                viewMode={viewMode as ViewMode}
+                onClick={(task) => router.push(`projects/${task.project_id}`)}
             />
         </div>
     )

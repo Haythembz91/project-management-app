@@ -51,7 +51,7 @@ const Home = ()=>{
             return
         }
         try{
-            const response = await FetchWithAuth('/api/notes',{
+            const response = await FetchWithAuth('/api/notes/task',{
                 method:'POST',
                 body:formData
             })

@@ -38,7 +38,7 @@ const Home = ()=>{
             return
         }
         if(password !== confirmPassword){
-            setError('Password does not match')
+            setError('Passwords don\'t match')
             setIsLoading(false)
             return
         }

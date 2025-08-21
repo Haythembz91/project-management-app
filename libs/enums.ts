@@ -24,3 +24,10 @@ export enum priorities {
     MEDIUM = 'medium',
     LOW = 'low'
 }
+
+export enum ViewMode {
+    WEEK = 'Week',
+    MONTH = 'Month',
+    YEAR = 'Year',
+    DAY = 'Day'
+}

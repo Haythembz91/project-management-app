@@ -4,7 +4,6 @@ const NotesContainer = ({notes}:{notes:Note[]|null})=>{
 
     if(!notes) return null
 
-    console.log(notes)
     return(
         <div>
             {notes.map(note=>(<div className={'d-flex'} key={note.id}>
