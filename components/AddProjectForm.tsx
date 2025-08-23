@@ -1,15 +1,15 @@
 'use client'
 import React from "react";
-import {useRouter} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {statusList} from "@/libs/const";
 import FetchWithAuth from "@/utils/FetchWithAuth";
-import {IoArrowBackOutline} from "react-icons/io5";
 
 const AddProjectForm = ()=>{
 
     const [isLoading, setIsLoading] = React.useState(false)
     const [error, setError] = React.useState('')
     const router = useRouter()
+    const {slug} = useParams()
     const handleProjectSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         setIsLoading(true)
@@ -53,11 +53,7 @@ const AddProjectForm = ()=>{
     }
 
     return (
-        <div className={'container-fluid'}>
-            <div className={'my-3'}>
-                <button className={'backBtn'} onClick={()=>router.back()}><IoArrowBackOutline /> Back</button>
-            </div>
-            <h1 className={'h1 mb-3'}>Add Project:</h1>
+        <section>
             <form onSubmit={handleProjectSubmit} className={'col-md-6'}>
                 <div className="form-floating mb-3">
                     <input required  type="text" name={'projectName'} className="form-control" id="projectName" placeholder="projectName"/>
@@ -109,7 +105,7 @@ const AddProjectForm = ()=>{
                         <span className={'px-1'} role="status">Adding project...</span>
                     </button>}
             </form>
-        </div>
+        </section>
     )
 }
 
