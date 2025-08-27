@@ -21,7 +21,9 @@ export default function RootLayout({
         <UserProvider>
           <Bootstrap></Bootstrap>
           <Header></Header>
-          {children}
+          <main>
+            {children}
+          </main>
         </UserProvider>
       </body>
     </html>
