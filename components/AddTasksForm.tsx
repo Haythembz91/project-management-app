@@ -2,8 +2,7 @@
 import {priorityList, statusList} from "@/libs/const";
 import React from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
-import {useRouter} from "next/navigation";
-import {IoArrowBackOutline} from "react-icons/io5";
+import {useRouter} from "next/navigation"
 
 const AddTasksForm = ({id}:{id:string})=>{
 
@@ -53,12 +52,9 @@ const AddTasksForm = ({id}:{id:string})=>{
             setIsLoading(false)
         }
     }
+
     return (
-        <div className={'container-fluid'}>
-            <div className={'my-3'}>
-                <button className={'backBtn'} onClick={()=>router.back()}><IoArrowBackOutline /> Back</button>
-            </div>
-            <h1 className={'h1 mb-3'}>Add Task:</h1>
+        <section className={'container-fluid'}>
             <form onSubmit={handleTaskSubmit} className={'col-md-6'}>
                 <div className="form-floating mb-3">
                     <input required type="text" name={'taskName'} className="form-control" id="taskName" placeholder="taskName"/>
@@ -112,7 +108,7 @@ const AddTasksForm = ({id}:{id:string})=>{
                         <span className={'px-1'} role="status">Adding task...</span>
                     </button>}
             </form>
-        </div>
+        </section>
     )
 }
 

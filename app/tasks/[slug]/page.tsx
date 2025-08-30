@@ -98,9 +98,14 @@ const Home = ()=>{
                     <IoArrowBackOutline /> Back to project page
                 </Link>
             </div>
-            <div className={'mb-3'}>
-                <h1 className={'mb-3'}>Project: {task.project_name}</h1>
-                <h2>Task: {task.name}</h2>
+            <div className={'d-flex justify-content-between mb-3'}>
+                <div>
+                    <h1 className={'mb-3'}>Project: {task.project_name}</h1>
+                    <h2>Task: {task.name}</h2>
+                </div>
+                <div>
+                    <Link className={'btn btn-outline-dark'} href={'/tasks/'+slug+'/edit'}>Edit task</Link>
+                </div>
             </div>
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>
                 <p className={'col'}>Description: {task.description}</p>
@@ -138,6 +143,9 @@ const Home = ()=>{
                             </button>}
                     </form>
                 </div>
+            </div>
+            <div className={'mb-3'}>
+                <p>Last updated: {new Date(task.updated_at).toLocaleString()}</p>
             </div>
         </section>
     )

@@ -1,15 +1,15 @@
-import AddTasksForm from "@/components/AddTasksForm";
-import {Params} from "@/libs/types";
 import BackButton from "@/components/BackButton";
-import AddProjectForm from "@/components/AddProjectForm";
+import React from "react";
+import {Params} from "@/libs/types";
+
 
 const Home = async ({params}:Params)=>{
     const {slug} = await params
     return (
         <main className={'container-fluid'}>
             <BackButton></BackButton>
-            <h1 className={'h1 mb-3'}>Create Task:</h1>
-            <AddTasksForm id={slug}></AddTasksForm>
+            <h1 className={'h1 mb-3'}>Edit Task:</h1>
+
         </main>
     )
 }

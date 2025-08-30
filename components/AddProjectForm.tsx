@@ -13,7 +13,6 @@ const AddProjectForm = ()=>{
     const [error, setError] = React.useState('')
     const router = useRouter()
     const {slug} = useParams()
-    console.log(slug)
 
     const handleProjectSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -61,12 +60,28 @@ const AddProjectForm = ()=>{
     useEffect(()=>{
         const getProject = async ()=>{
             const p = await GetProject({id:slug as string})
-            if(p){
+            if(p.project){
                 setProject(p.project)
+            }
+            if(p.error){
+                setError(p.error)
             }
         }
         getProject().catch(console.error)
     },[slug])
+
+
+    if(error){
+        return (
+            <div>
+                <div className={'d-flex justify-content-center my-5'}>
+                    <div className="alert alert-danger" role="alert">
+                        Project not found
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     if(slug&&!project){
         return (

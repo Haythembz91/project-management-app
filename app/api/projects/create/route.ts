@@ -48,7 +48,7 @@ export async function POST(req:NextRequest){
     const projectId = formData.get('projectId') as string
     if(projectId){
         try{
-            const update = await pool.query("UPDATE projects SET name=$1,description=$2,client=$3,manager=$4,site=$5,budget=$6,status=$7,start_date=$8,end_date=$9 WHERE id=$10 AND user_id=$11 RETURNING id",[name,description,client,manager,site,budget,status,startDate,endDate,projectId,user.id])
+            const update = await pool.query("UPDATE projects SET name=$1,description=$2,client=$3,manager=$4,site=$5,budget=$6,status=$7,start_date=$8,end_date=$9,updated_at=CURRENT_TIMESTAMP WHERE id=$10 AND user_id=$11 RETURNING id",[name,description,client,manager,site,budget,status,startDate,endDate,projectId,user.id])
             if(update.rows.length===0)
                 return NextResponse.json({error:"Project not found"},{status:404});
             return NextResponse.json(update.rows[0])

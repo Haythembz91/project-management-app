@@ -170,8 +170,8 @@ const Home = ()=>{
                     </form>
                 </div>
             </div>
-            <div>
-                <p className={'m-0'}>Last updated: {new Date(project.updated_at).toLocaleDateString()}</p>
+            <div className={'mb-3'}>
+                <p>Last updated: {new Date(project.updated_at).toLocaleString()}</p>
             </div>
         </div>
     )
