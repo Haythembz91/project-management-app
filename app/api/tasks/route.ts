@@ -17,7 +17,7 @@ export async function GET (req:NextRequest){
     try{
         const id = req.nextUrl.searchParams.get('id') as string
         if(id){
-            const task = await pool.query('SELECT t.*,p.name AS project_name FROM tasks t JOIN projects p ON t.project_id = p.id WHERE p.user_id = $1 AND t.id = $2', [user.id,id])
+            const task = await pool.query('SELECT t.*,p.name AS project_name FROM tasks t JOIN projects p ON t.project_id = p.id WHERE p.user_id = $1 AND t.id = $2 ORDER BY t.task_start_date ASC', [user.id,id])
             const notes = await pool.query('SELECT n.*,u.username,u.email FROM notes n JOIN users u ON n.user_id = u.id WHERE n.task_id = $1', [id])
             return NextResponse.json({task:task.rows[0],notes:notes.rows})
         }

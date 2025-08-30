@@ -2,20 +2,22 @@
 import {priorityList, statusList} from "@/libs/const";
 import React from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
-import {useRouter} from "next/navigation"
+import {useParams, useRouter} from "next/navigation"
 
-const AddTasksForm = ({id}:{id:string})=>{
+const AddTasksForm = ()=>{
 
     const [error, setError] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
     const [progress, setProgress] = React.useState(0)
     const router = useRouter()
+    const {projectId,taskId}=useParams()
+
     const handleTaskSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         setIsLoading(true)
         setError('')
         const formData = new FormData(e.currentTarget)
-        formData.append('projectId',id)
+        formData.append('projectId',projectId as string)
         const taskStartDate = new Date(formData.get('taskStartDate') as string).getTime()
         const taskDueData = new Date(formData.get('taskDueDate') as string).getTime()
         if(taskDueData<taskStartDate){
@@ -43,7 +45,7 @@ const AddTasksForm = ({id}:{id:string})=>{
                 return
             }
             setError('')
-            router.push(`/projects/${id}`)
+            router.push(`/projects/${projectId}`)
         }catch(error){
             console.log(error)
             setError('Internal server error')

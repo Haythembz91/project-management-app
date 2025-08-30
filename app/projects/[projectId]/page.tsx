@@ -15,7 +15,7 @@ import NotesContainer from "@/components/NotesContainer";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 
 const Home = ()=>{
-    const {slug} = useParams()
+    const {projectId} = useParams()
     const [project,setProject] = React.useState<Project|null>(null)
     const [tasks,setTasks] = React.useState<Task[]|null>(null)
     const [cardView,setCardView] = React.useState<boolean>(true)
@@ -23,13 +23,12 @@ const Home = ()=>{
     const [isLoading,setIsLoading] = React.useState<boolean>(false)
     const [notes,setNotes] = React.useState<Note[]|null>(null)
     const formRef = React.useRef<HTMLFormElement>(null)
-
     const handlePost = async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         setError('')
         setIsLoading(true)
         const formData = new FormData(e.currentTarget)
-        formData.append('project_id',slug as string)
+        formData.append('project_id',projectId as string)
         if (!formData.get('text')) {
             setError('Text is required')
             setIsLoading(false)
@@ -50,7 +49,7 @@ const Home = ()=>{
                 return
             }
             setError('')
-            const p = await GetProject({id:slug as string})
+            const p = await GetProject({id:projectId as string})
             if(p){
                 setProject(p.project)
                 setTasks(p.tasks)
@@ -65,7 +64,7 @@ const Home = ()=>{
     }
     useEffect(()=>{
         const getProject = async ()=>{
-            const p = await GetProject({id:slug as string})
+            const p = await GetProject({id:projectId as string})
             if(p){
                 setProject(p.project)
                 setTasks(p.tasks)
@@ -73,7 +72,7 @@ const Home = ()=>{
             }
         }
         getProject().catch(console.error)
-    },[slug])
+    },[projectId])
     if(!project){
         return (
             <div className={'d-flex justify-content-center my-5'}>
@@ -94,7 +93,7 @@ const Home = ()=>{
                     <h1>{project.name}</h1>
                 </div>
                 <div>
-                    <Link className={'btn btn-outline-dark'} href={'/projects/'+slug+'/edit'}>Edit project</Link>
+                    <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/edit'}>Edit project</Link>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-sm-2 g-4 mb-3'}>
@@ -133,7 +132,7 @@ const Home = ()=>{
                 </div>
             </div>
             <div className={'mb-3'}>
-                <Link className={'btn btn-outline-dark'} href={'/projects/'+slug+'/tasks/create'}>
+                <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
                     <IoMdAdd /> Add task
                 </Link>
             </div>

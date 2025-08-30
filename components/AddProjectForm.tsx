@@ -12,14 +12,14 @@ const AddProjectForm = ()=>{
     const [project,setProject] = React.useState<Project|null>(null)
     const [error, setError] = React.useState('')
     const router = useRouter()
-    const {slug} = useParams()
+    const {projectId} = useParams()
 
     const handleProjectSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         setIsLoading(true)
         setError('')
         const formData = new FormData(e.currentTarget)
-        formData.append('projectId',slug as string)
+        formData.append('projectId',projectId as string)
         const projectStartDate = new Date(formData.get('projectStartDate') as string).getTime()
         const projectEndDate = new Date(formData.get('projectEndDate') as string).getTime()
         if(projectEndDate<projectStartDate){
@@ -59,7 +59,7 @@ const AddProjectForm = ()=>{
 
     useEffect(()=>{
         const getProject = async ()=>{
-            const p = await GetProject({id:slug as string})
+            const p = await GetProject({id:projectId as string})
             if(p.project){
                 setProject(p.project)
             }
@@ -68,7 +68,7 @@ const AddProjectForm = ()=>{
             }
         }
         getProject().catch(console.error)
-    },[slug])
+    },[projectId])
 
 
     if(error){
@@ -83,7 +83,7 @@ const AddProjectForm = ()=>{
         )
     }
 
-    if(slug&&!project){
+    if(projectId&&!project){
         return (
             <div>
                 <div className={'d-flex justify-content-center my-5'}>
@@ -142,10 +142,10 @@ const AddProjectForm = ()=>{
                 {error&&<div className="alert alert-danger mb-3" role="alert">
                     {error}
                 </div>}
-                {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>{slug?'Update project':'Add project'}</button>:
+                {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>{projectId?'Update project':'Add project'}</button>:
                     <button className="btn btn-outline-dark w-100" type="button" disabled>
                         <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                        <span className={'px-1'} role="status">{slug?'Updating project...':'Adding project...'}</span>
+                        <span className={'px-1'} role="status">{projectId?'Updating project...':'Adding project...'}</span>
                     </button>}
             </form>
         </section>

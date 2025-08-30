@@ -12,7 +12,7 @@ import NotesContainer from "@/components/NotesContainer";
 
 const Home = ()=>{
 
-    const {slug} = useParams()
+    const {taskId} = useParams()
     const [task,setTask] = React.useState<Task|null>(null)
     const [notes,setNotes] = React.useState<Note[]|null>(null)
     const [error,setError] = React.useState<string>('')
@@ -21,7 +21,7 @@ const Home = ()=>{
 
     const getTask = async()=>{
         try{
-            const response = await FetchWithAuth(`/api/tasks?id=${slug}`,
+            const response = await FetchWithAuth(`/api/tasks?id=${taskId}`,
                 {method:'GET'})
             if(!response.ok){
                 if(response.status===401){
@@ -44,7 +44,7 @@ const Home = ()=>{
         setError('')
         setIsLoading(true)
         const formData = new FormData(e.currentTarget)
-        formData.append('task_id',slug as string)
+        formData.append('task_id',taskId as string)
         if (!formData.get('text')) {
             setError('Text is required')
             setIsLoading(false)
@@ -104,7 +104,7 @@ const Home = ()=>{
                     <h2>Task: {task.name}</h2>
                 </div>
                 <div>
-                    <Link className={'btn btn-outline-dark'} href={'/tasks/'+slug+'/edit'}>Edit task</Link>
+                    <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}>Edit task</Link>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>

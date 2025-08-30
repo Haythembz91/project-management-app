@@ -1,5 +1,5 @@
 
 
 export type Params = {
-    params: Promise<{ slug: string }>
+    params: Promise<{ taskId: string }>
 }
