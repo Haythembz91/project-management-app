@@ -1,8 +1,8 @@
 import FetchWithAuth from "@/utils/FetchWithAuth";
 
-const getTask = async({slug}:{slug:string})=>{
+const getTask = async(id:string)=>{
     try{
-        const response = await FetchWithAuth(`/api/tasks?id=${slug}`,
+        const response = await FetchWithAuth(`/api/tasks?id=${id}`,
             {method:'GET'})
         if(!response.ok){
             if(response.status===401){

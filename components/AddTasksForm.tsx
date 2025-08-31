@@ -1,14 +1,17 @@
 'use client'
 import {priorityList, statusList} from "@/libs/const";
-import React from "react";
+import React, {useEffect} from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import {useParams, useRouter} from "next/navigation"
+import {Task} from "@/libs/interfaces";
+import getTask from "@/utils/GetTask";
 
 const AddTasksForm = ()=>{
 
     const [error, setError] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
     const [progress, setProgress] = React.useState(0)
+    const [task,setTask] = React.useState<Task|null>(null)
     const router = useRouter()
     const {projectId,taskId}=useParams()
 
@@ -17,7 +20,12 @@ const AddTasksForm = ()=>{
         setIsLoading(true)
         setError('')
         const formData = new FormData(e.currentTarget)
-        formData.append('projectId',projectId as string)
+        if(projectId){
+            formData.append('projectId',projectId as string)
+        }
+        if(taskId){
+            formData.append('taskId',taskId as string)
+        }
         const taskStartDate = new Date(formData.get('taskStartDate') as string).getTime()
         const taskDueData = new Date(formData.get('taskDueDate') as string).getTime()
         if(taskDueData<taskStartDate){
@@ -55,23 +63,34 @@ const AddTasksForm = ()=>{
         }
     }
 
+
+    useEffect(()=>{
+        const fetchTask = async()=>{
+            await getTask(taskId as string).then(p=>setTask(p.task))
+        }
+        if(taskId){
+            fetchTask().then()
+        }
+    },[])
+
+
     return (
         <section className={'container-fluid'}>
             <form onSubmit={handleTaskSubmit} className={'col-md-6'}>
                 <div className="form-floating mb-3">
-                    <input required type="text" name={'taskName'} className="form-control" id="taskName" placeholder="taskName"/>
+                    <input defaultValue={task?.name} required type="text" name={'taskName'} className="form-control" id="taskName" placeholder="taskName"/>
                     <label htmlFor="taskName">Task&apos;s name</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input required type="text" name={'taskDescription'} className="form-control" id="taskDescription" placeholder="taskDescription"/>
+                    <input defaultValue={task?.description} required type="text" name={'taskDescription'} className="form-control" id="taskDescription" placeholder="taskDescription"/>
                     <label htmlFor="taskDescription">Task&apos;s description</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input required type="text" name={'assignedTo'} className="form-control" id="assignedTo" placeholder="assignedTo"/>
+                    <input defaultValue={task?.assigned_to} required type="text" name={'assignedTo'} className="form-control" id="assignedTo" placeholder="assignedTo"/>
                     <label htmlFor="assignedTo">Assigned to</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <select defaultValue={''} required name={'taskPriority'} className="form-control" id="taskPriority">
+                    <select defaultValue={task?.priority} required name={'taskPriority'} className="form-control" id="taskPriority">
                         <option value={''} disabled >Select priority</option>
                         {priorityList.map((priority,index)=>
                             <option key={index} value={priority}>{priority}</option>
@@ -80,7 +99,7 @@ const AddTasksForm = ()=>{
                     <label htmlFor="taskPriority">Task&apos;s priority</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <select defaultValue={''} required name={'taskStatus'} className="form-control" id="taskStatus">
+                    <select defaultValue={task?.status} required name={'taskStatus'} className="form-control" id="taskStatus">
                         <option value={''} disabled >Select status</option>
                         {statusList.map((status,index)=>
                             <option key={index} value={status}>{status}</option>
@@ -94,11 +113,11 @@ const AddTasksForm = ()=>{
                     <div className={'d-flex justify-content-between'}><span>0%</span><span>100%</span></div>
                 </div>
                 <div className="form-floating mb-3">
-                    <input required type="date" name={'taskStartDate'} className="form-control" id="taskStartDate" placeholder="taskStartDate"/>
+                    <input defaultValue={task?.task_start_date&&new Date(task?.task_start_date).toISOString().split('T')[0]} required type="date" name={'taskStartDate'} className="form-control" id="taskStartDate" placeholder="taskStartDate"/>
                     <label htmlFor="taskStartDate">Task&apos;s start date</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input required type="date" name={'taskDueDate'} className="form-control" id="taskDueDate" placeholder="taskDueDate"/>
+                    <input defaultValue={task?.task_due_date&&new Date(task?.task_due_date).toISOString().split('T')[0]} required type="date" name={'taskDueDate'} className="form-control" id="taskDueDate" placeholder="taskDueDate"/>
                     <label htmlFor="taskDueDate">Task&apos;s due date</label>
                 </div>
                 {error&&<div className="alert alert-danger mb-3" role="alert">

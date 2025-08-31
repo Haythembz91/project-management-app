@@ -9,6 +9,7 @@ import {priorityIcon} from "@/utils/PriorityIcon";
 import {statusColor} from "@/utils/StatusColor";
 import {status} from "@/libs/enums";
 import NotesContainer from "@/components/NotesContainer";
+import getTask from "@/utils/GetTask";
 
 const Home = ()=>{
 
@@ -19,25 +20,6 @@ const Home = ()=>{
     const [isLoading,setIsLoading] = React.useState<boolean>(false)
     const formRef = React.useRef<HTMLFormElement>(null)
 
-    const getTask = async()=>{
-        try{
-            const response = await FetchWithAuth(`/api/tasks?id=${taskId}`,
-                {method:'GET'})
-            if(!response.ok){
-                if(response.status===401){
-                    window.location.href = '/auth/login'
-                    return
-                }
-                console.error(response.statusText)
-                return
-            }
-            const data = await response.json()
-            setTask(data.task)
-            setNotes(data.notes)
-        }catch(error){
-            console.log(error)
-        }
-    }
 
     const handlePost = async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -65,7 +47,10 @@ const Home = ()=>{
                 return
             }
             setError('')
-            await getTask()
+            await getTask(taskId as string).then(p=> {
+                setNotes(p.notes);
+                setTask(p.task)
+            })
             formRef.current?.reset()
         }catch(error){
             console.log(error)
@@ -76,7 +61,9 @@ const Home = ()=>{
 
     useEffect(()=>{
         const fetchTask = async()=>{
-            await getTask()
+            const result = await getTask(taskId as string)
+            setTask(result.task)
+            setNotes(result.notes)
         }
         fetchTask().then().catch()
     },[])
