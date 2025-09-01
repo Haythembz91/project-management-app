@@ -35,7 +35,7 @@ const AddTasksForm = ()=>{
         }
         try{
             const response = await FetchWithAuth('/api/projects/tasks/create',{
-                method:'POST',
+                method:taskId?'PUT':'POST',
                 body:formData
             })
             if(!response.ok){
@@ -53,7 +53,7 @@ const AddTasksForm = ()=>{
                 return
             }
             setError('')
-            router.push(`/projects/${projectId}`)
+            router.push(projectId?`/projects/${projectId}`:`/tasks/${taskId}`)
         }catch(error){
             console.log(error)
             setError('Internal server error')
@@ -73,6 +73,17 @@ const AddTasksForm = ()=>{
         }
     },[])
 
+    if(!projectId&&!task){
+        return(
+            <div>
+                <div className={'d-flex justify-content-center my-5'}>
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <section className={'container-fluid'}>
@@ -123,10 +134,10 @@ const AddTasksForm = ()=>{
                 {error&&<div className="alert alert-danger mb-3" role="alert">
                     {error}
                 </div>}
-                {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>Add task</button>:
+                {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>{taskId?'Update task':'Add task'}</button>:
                     <button className="btn btn-outline-dark w-100" type="button" disabled>
                         <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                        <span className={'px-1'} role="status">Adding task...</span>
+                        <span className={'px-1'} role="status">{taskId?'Updating task...':'Adding task...'}</span>
                     </button>}
             </form>
         </section>

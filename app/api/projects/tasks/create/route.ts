@@ -53,19 +53,61 @@ export async function POST (req:NextRequest){
             if(addTask.rowCount===0){
                 return NextResponse.json({error:"Internal server error"},{status:500})
             }
-        }catch(error){
-            console.log(error)
-            return NextResponse.json({error:"Internal server error"},{status:500})
-        }
-        try{
-            const getTasks = await pool.query("SELECT * FROM tasks WHERE project_id = $1 ORDER BY task_start_date DESC",[projectId])
-            return NextResponse.json(getTasks.rows)
+            return NextResponse.json({message:"Task created successfully"},{status:201})
         }catch(error){
             console.log(error)
             return NextResponse.json({error:"Internal server error"},{status:500})
         }
     }catch(error){
         console.log(error)
-        return NextResponse.json({error:"malformed request"},{status:400})
+        return NextResponse.json({error:"Internal server error"},{status:500})
+    }
+}
+
+export async function PUT (req:NextRequest){
+
+    let user:User
+    try{
+        user = await GetUserFromCookies(tokens.ACCESS_TOKEN)
+    }catch(error){
+        console.log(error)
+        return NextResponse.json({error:"Unauthorized"},{status:401})
+    }
+    let formData : FormData
+    try{
+        formData = await req.formData()
+        for (const [key, value] of formData) {
+            if(!value){
+                return NextResponse.json({error:`Missing ${key}`},{status:422})
+            }
+        }
+        const taskId = formData.get('taskId');
+        const taskStartDate = new Date(formData.get('taskStartDate') as string);
+        const taskDueDate = new Date(formData.get('taskDueDate') as string);
+        if(taskDueDate.getTime()<taskStartDate.getTime()){
+            return NextResponse.json({error:"Start date must be before end date"},{status:422})
+        }
+        const name = formData.get('taskName') as string
+        const description = formData.get('taskDescription') as string
+        const priority = formData.get('taskPriority') as priorities
+        const status = formData.get('taskStatus') as string
+        const assignedTo = formData.get('assignedTo') as string
+        const taskProgress = parseInt(formData.get('taskProgress') as string) as number
+        if(taskProgress<0||taskProgress>100){
+            return NextResponse.json({error:"Progress must be between 0 and 100"},{status:422})
+        }
+        try{
+            const addTask = await pool.query("UPDATE tasks SET name = $1, description = $2, priority = $3, progress = $4, status = $5, assigned_to = $6, task_start_date = $7, task_due_date = $8, updated_at = NOW() WHERE id = $9 RETURNING *",[name,description,priority,taskProgress,status,assignedTo,taskStartDate,taskDueDate,taskId])
+            if(addTask.rowCount===0){
+                return NextResponse.json({error:"Task not found"},{status:404})
+            }
+            return NextResponse.json({message:"Task updated successfully"},{status:200})
+        }catch(error){
+            console.log(error)
+            return NextResponse.json({error:"Internal server error"},{status:500})
+        }
+    }catch(error){
+        console.log(error)
+        return NextResponse.json({error:"Internal server error"},{status:500})
     }
 }
