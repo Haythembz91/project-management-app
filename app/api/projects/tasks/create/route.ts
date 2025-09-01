@@ -97,7 +97,7 @@ export async function PUT (req:NextRequest){
             return NextResponse.json({error:"Progress must be between 0 and 100"},{status:422})
         }
         try{
-            const addTask = await pool.query("UPDATE tasks SET name = $1, description = $2, priority = $3, progress = $4, status = $5, assigned_to = $6, task_start_date = $7, task_due_date = $8, updated_at = NOW() WHERE id = $9 RETURNING *",[name,description,priority,taskProgress,status,assignedTo,taskStartDate,taskDueDate,taskId])
+            const addTask = await pool.query("UPDATE tasks t SET name = $1, description = $2, priority = $3, progress = $4, status = $5, assigned_to = $6, task_start_date = $7, task_due_date = $8, updated_at = NOW() FROM projects p WHERE t.id = $9 AND t.project_id = p.id AND p.user_id = $10 RETURNING *",[name,description,priority,taskProgress,status,assignedTo,taskStartDate,taskDueDate,taskId,user.id])
             if(addTask.rowCount===0){
                 return NextResponse.json({error:"Task not found"},{status:404})
             }

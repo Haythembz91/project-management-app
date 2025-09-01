@@ -10,8 +10,8 @@ const AddTasksForm = ()=>{
 
     const [error, setError] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
-    const [progress, setProgress] = React.useState(0)
     const [task,setTask] = React.useState<Task|null>(null)
+    const [progress, setProgress] = React.useState(0)
     const router = useRouter()
     const {projectId,taskId}=useParams()
 
@@ -64,14 +64,18 @@ const AddTasksForm = ()=>{
     }
 
 
-    useEffect(()=>{
-        const fetchTask = async()=>{
-            await getTask(taskId as string).then(p=>setTask(p.task))
-        }
+    useEffect(() => {
+        const fetchTask = async () => {
+            return getTask(taskId as string);
+        };
+
         if(taskId){
-            fetchTask().then()
+            fetchTask().then(r=>{
+                setTask(r.task);
+                setProgress(r.task.progress);
+            });
         }
-    },[])
+    }, [taskId]);
 
     if(!projectId&&!task){
         return(
@@ -84,7 +88,6 @@ const AddTasksForm = ()=>{
             </div>
         )
     }
-
     return (
         <section className={'container-fluid'}>
             <form onSubmit={handleTaskSubmit} className={'col-md-6'}>
@@ -101,7 +104,7 @@ const AddTasksForm = ()=>{
                     <label htmlFor="assignedTo">Assigned to</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <select defaultValue={task?.priority} required name={'taskPriority'} className="form-control" id="taskPriority">
+                    <select defaultValue={task?.priority?task.priority:''} required name={'taskPriority'} className="form-control" id="taskPriority">
                         <option value={''} disabled >Select priority</option>
                         {priorityList.map((priority,index)=>
                             <option key={index} value={priority}>{priority}</option>
@@ -110,7 +113,7 @@ const AddTasksForm = ()=>{
                     <label htmlFor="taskPriority">Task&apos;s priority</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <select defaultValue={task?.status} required name={'taskStatus'} className="form-control" id="taskStatus">
+                    <select defaultValue={task?.status?task.status:''} required name={'taskStatus'} className="form-control" id="taskStatus">
                         <option value={''} disabled >Select status</option>
                         {statusList.map((status,index)=>
                             <option key={index} value={status}>{status}</option>
@@ -119,8 +122,8 @@ const AddTasksForm = ()=>{
                     <label htmlFor="taskStatus">Task&apos;s status</label>
                 </div>
                 <div className="mb-3">
-                    <label className={'form-label'} htmlFor="taskProgress">Task&apos;s progress: {progress}%</label>
-                    <input required onChange={(e)=>setProgress(parseInt(e.target.value))} type="range" defaultValue={0} min={0} max={100} step={1} name={'taskProgress'} className="form-range" id="taskProgress" placeholder="taskProgress"/>
+                    <label className={'form-label'} htmlFor="taskProgress">Task&apos;s progress: {Math.round(progress)}%</label>
+                    <input required onChange={(e)=>setProgress(parseInt(e.target.value))} type="range" defaultValue={task?.progress?task.progress:0} min={0} max={100} step={1} name={'taskProgress'} className="form-range" id="taskProgress" placeholder="taskProgress"/>
                     <div className={'d-flex justify-content-between'}><span>0%</span><span>100%</span></div>
                 </div>
                 <div className="form-floating mb-3">
