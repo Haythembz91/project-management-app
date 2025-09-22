@@ -13,6 +13,7 @@ import {statusColor} from "@/utils/StatusColor";
 import {status} from "@/libs/enums";
 import NotesContainer from "@/components/NotesContainer";
 import FetchWithAuth from "@/utils/FetchWithAuth";
+import {FaChartGantt} from "react-icons/fa6";
 
 const Home = ()=>{
     const {projectId} = useParams()
@@ -134,6 +135,11 @@ const Home = ()=>{
             <div className={'mb-3'}>
                 <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
                     <IoMdAdd /> Add task
+                </Link>
+            </div>
+            <div className={'mb-3'}>
+                <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/chart'}>
+                    <FaChartGantt /> Chart
                 </Link>
             </div>
             <div className={'mb-3'}>
