@@ -13,13 +13,13 @@ const Gantt = dynamic(
 
 const Home =()=>{
 
-    const [tasks,setTasks] = React.useState<Task[]|null>(null)
+    const [tasks,setTasks] = React.useState<[]>([])
     const router = useRouter()
     const [from,setFrom] = React.useState<string>(new Date().toISOString().split('T')[0])
     const today = new Date ()
     const sevendays = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
     const [to,setTo] = React.useState<string>(sevendays.toISOString().split('T')[0])
-    const [viewMode,setViewMode] = React.useState<ViewMode>(ViewMode.WEEK)
+    const [viewMode,setViewMode] = React.useState<ViewMode>(ViewMode.Day)
     const getTasks = async ()=>{
         try{
             const response = await FetchWithAuth(`/api/tasks?from=${from}&to=${to}`,{
@@ -42,6 +42,7 @@ const Home =()=>{
 
     useEffect(()=>{
         getTasks().then().catch()
+
     },[from,to])
 
     if(!tasks){
@@ -53,16 +54,20 @@ const Home =()=>{
             </div>
         )
     }
-    const ganttTasks:Task = tasks.map(task=>({
-        id:task.id,
-        name:task.project_name+' : '+task.name,
-        project_id:task.project_id,
-        start:task.task_start_date,
-        end:task.task_due_date,
-        progress:task.progress,
-        dependencies:''
-    }))
 
+
+    const gantTasks = [
+        {
+            id: '',
+            name: 'Task 1',
+            start: new Date().toISOString(),
+            end: new Date().toISOString(),
+            progress: 0,
+            dependencies: ''
+        }
+    ]
+
+    let ganttTasks;
     return(
         <div>
             <div className={'m-3'}>
@@ -79,7 +84,7 @@ const Home =()=>{
             </div>
             <div className={'col-md-6 m-3'}>
                 <label htmlFor={'viewMode'} className={'form-label'}>View Mode:</label>
-                <select id={'viewMode'} className="form-select mb-3" onChange={(e)=>setViewMode(p=>e.target.value)} aria-label="Default select example">
+                <select id={'viewMode'} className="form-select mb-3" onChange={(e)=>setViewMode(p=>e.target.value as ViewMode)} aria-label="Default select example">
                     <option defaultValue={'View Mode'}>View Mode</option>
                     <option value="Week">Week</option>
                     <option value="Day">Day</option>
@@ -88,9 +93,8 @@ const Home =()=>{
                 </select>
             </div>
             <FrappeGantt
-                tasks={ganttTasks}
+                tasks={gantTasks as Task[]}
                 viewMode={viewMode as ViewMode}
-                onClick={(task) => router.push(`projects/${task.project_id}`)}
             />
         </div>
     )

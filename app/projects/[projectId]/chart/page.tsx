@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import BackButton from "@/components/BackButton";
 import React, {useEffect} from "react";
 import GetProject from "@/utils/GetProject";
-import {Task} from "@toyokoh/frappe-gantt-react";
 import {useParams} from "next/navigation";
+import {ViewMode, Task} from "@toyokoh/frappe-gantt-react";
 
 const Gantt = dynamic(
     () =>
@@ -15,14 +15,7 @@ const Gantt = dynamic(
 
 export default function Home() {
 
-    const [tasks,setTasks] = React.useState<{
-        id: string,
-        name: string,
-        start: string,
-        end: string,
-        progress: number,
-        dependencies: string
-    }[]>([])
+    const [tasks,setTasks] = React.useState<Task[]>([])
     const [projectName,setProjectName] = React.useState('')
     const {projectId} = useParams()
 
@@ -30,7 +23,14 @@ export default function Home() {
         const getProject = async ()=>{
             const p = await GetProject({id:projectId as string})
             if(p){
-                const newTasks = p.tasks.map((task:Task)=>{
+                const newTasks = p.tasks.map((task:{
+                    id: string,
+                    name: string,
+                    progress: number,
+                    task_start_date: string,
+                    task_due_date: string,
+                    dependencies: string
+                })=>{
                     return {
                         id:task.id,
                         name:task.name,
@@ -61,7 +61,7 @@ export default function Home() {
             <h1>Project: {projectName}</h1>
             <Gantt
                 tasks={tasks}
-                viewMode="Day"
+                viewMode={ViewMode.Day}
                 onClick={(task) => console.log(task)}
             />
         </main>
