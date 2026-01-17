@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Bootstrap from "@/scripts/Bootstrap";
 import {UserProvider} from "@/contexts/UserContext";
+import { Analytics } from "@vercel/analytics/next"
 export const metadata: Metadata = {
   title: "Construction Project Management App",
   description: "Construction Project Management App",
@@ -25,6 +26,7 @@ export default function RootLayout({
             {children}
           </main>
         </UserProvider>
+        <Analytics />
       </body>
     </html>
   );

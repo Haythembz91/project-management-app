@@ -23,7 +23,7 @@ export interface Project {
     avg_progress: number;
 }
 
-export interface Task {
+export interface Tasks {
     name:string;
     description:string;
     priority:priorities;
@@ -37,6 +37,7 @@ export interface Task {
     updated_at:string;
     project_name?:string;
     project_id:string;
+    dependencies?:string|null
 }
 
 export interface GanttTask {

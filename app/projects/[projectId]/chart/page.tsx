@@ -6,6 +6,8 @@ import React, {useEffect} from "react";
 import GetProject from "@/utils/GetProject";
 import {useParams} from "next/navigation";
 import {ViewMode, Task} from "@toyokoh/frappe-gantt-react";
+import Link from "next/link";
+import {IoMdAdd} from "react-icons/io";
 
 const Gantt = dynamic(
     () =>
@@ -15,7 +17,7 @@ const Gantt = dynamic(
 
 export default function Home() {
 
-    const [tasks,setTasks] = React.useState<Task[]>([])
+    const [tasks,setTasks] = React.useState<Task[]|null>(null)
     const [projectName,setProjectName] = React.useState('')
     const {projectId} = useParams()
 
@@ -47,7 +49,7 @@ export default function Home() {
         getProject().catch(console.error)
     },[projectId])
 
-    if(!tasks.length) return (
+    if(!tasks) return (
         <div className={'d-flex justify-content-center my-5'}>
             <div className="spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -59,11 +61,16 @@ export default function Home() {
         <main className={'container-fluid'}>
             <BackButton></BackButton>
             <h1>Project: {projectName}</h1>
-            <Gantt
-                tasks={tasks}
-                viewMode={ViewMode.Day}
-                onClick={(task) => console.log(task)}
-            />
+            {tasks.length>0?<Gantt tasks={tasks} viewMode={ViewMode.Month} />:
+            <div className={'d-flex flex-column align-items-center my-5'}>
+                <p>No tasks found</p>
+                <div className={'mb-3'}>
+                <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
+                    <IoMdAdd /> Add task
+                </Link>
+                </div>        
+            </div>
+            }
         </main>
     );
 }

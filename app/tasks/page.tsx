@@ -3,7 +3,8 @@ import { FrappeGantt, Task, ViewMode } from '@toyokoh/frappe-gantt-react';
 import React, {useEffect} from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import dynamic from 'next/dynamic';
-import {useRouter} from "next/navigation";
+import { Tasks } from '@/libs/interfaces';
+import { viewModeList } from '@/libs/const';
 
 const Gantt = dynamic(
     () =>
@@ -13,8 +14,7 @@ const Gantt = dynamic(
 
 const Home =()=>{
 
-    const [tasks,setTasks] = React.useState<[]>([])
-    const router = useRouter()
+    const [tasks,setTasks] = React.useState<Task[]|null>(null)
     const [from,setFrom] = React.useState<string>(new Date().toISOString().split('T')[0])
     const today = new Date ()
     const sevendays = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
@@ -34,7 +34,16 @@ const Home =()=>{
                 return
             }
             const data = await response.json()
-            setTasks(data)
+            setTasks(data.map((task:Tasks)=>{
+                return {
+                    id:task.id,
+                    name:task.name,
+                    start:task.task_start_date,
+                    end:task.task_due_date,
+                    progress:Number(task.progress),
+                    dependencies:task.dependencies?task.dependencies:""
+                }
+            }))
         }catch(error){
             console.log(error)
         }
@@ -44,6 +53,8 @@ const Home =()=>{
         getTasks().then().catch()
 
     },[from,to])
+
+    
 
     if(!tasks){
         return (
@@ -56,18 +67,7 @@ const Home =()=>{
     }
 
 
-    const gantTasks = [
-        {
-            id: '',
-            name: 'Task 1',
-            start: new Date().toISOString(),
-            end: new Date().toISOString(),
-            progress: 0,
-            dependencies: ''
-        }
-    ]
 
-    let ganttTasks;
     return(
         <div>
             <div className={'m-3'}>
@@ -86,16 +86,18 @@ const Home =()=>{
                 <label htmlFor={'viewMode'} className={'form-label'}>View Mode:</label>
                 <select id={'viewMode'} className="form-select mb-3" onChange={(e)=>setViewMode(p=>e.target.value as ViewMode)} aria-label="Default select example">
                     <option defaultValue={'View Mode'}>View Mode</option>
-                    <option value="Week">Week</option>
-                    <option value="Day">Day</option>
-                    <option value="Year">Year</option>
-                    <option value="Month">Month</option>
+                    {viewModeList.map((viewMode)=>(<option key={viewMode} value={viewMode}>{viewMode}</option>))}
                 </select>
             </div>
-            <FrappeGantt
-                tasks={gantTasks as Task[]}
-                viewMode={viewMode as ViewMode}
-            />
+            {tasks.length===0?
+                <div className={'d-flex justify-content-center my-5'}>
+                    <p>No tasks found for the selected range</p>
+                </div>:
+                <FrappeGantt
+                    tasks={tasks as Task[]}
+                    viewMode={viewMode as ViewMode}
+                />
+            }
         </div>
     )
 }

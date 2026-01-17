@@ -19,7 +19,7 @@ const AddProjectForm = ()=>{
         setIsLoading(true)
         setError('')
         const formData = new FormData(e.currentTarget)
-        formData.append('projectId',projectId as string)
+        projectId?formData.append('projectId',projectId as string):null
         const projectStartDate = new Date(formData.get('projectStartDate') as string).getTime()
         const projectEndDate = new Date(formData.get('projectEndDate') as string).getTime()
         if(projectEndDate<projectStartDate){
