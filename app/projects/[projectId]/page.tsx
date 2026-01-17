@@ -5,7 +5,7 @@ import {useParams} from "next/navigation";
 import React, {useEffect} from "react";
 import GetProject from "@/utils/GetProject";
 import { IoArrowBackOutline } from "react-icons/io5";
-import {Note, Project, Task} from "@/libs/interfaces";
+import {Note, Project, Tasks} from "@/libs/interfaces";
 import TasksTableView from "@/components/TasksTableView";
 import {MdTableRows, MdViewModule} from "react-icons/md";
 import CardViewTasks from "@/components/CardViewTasks";
@@ -18,7 +18,7 @@ import {FaChartGantt} from "react-icons/fa6";
 const Home = ()=>{
     const {projectId} = useParams()
     const [project,setProject] = React.useState<Project|null>(null)
-    const [tasks,setTasks] = React.useState<Task[]|null>(null)
+    const [tasks,setTasks] = React.useState<Tasks[]|null>(null)
     const [cardView,setCardView] = React.useState<boolean>(true)
     const [error,setError] = React.useState<string>('')
     const [isLoading,setIsLoading] = React.useState<boolean>(false)

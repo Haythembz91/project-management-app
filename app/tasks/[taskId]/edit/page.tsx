@@ -1,6 +1,5 @@
 import BackButton from "@/components/BackButton";
 import React from "react";
-import {Params} from "@/libs/types";
 import AddTasksForm from "@/components/AddTasksForm";
 
 

@@ -1,11 +1,11 @@
 
-import {Task} from "@/libs/interfaces";
+import {Tasks} from "@/libs/interfaces";
 import Link from "next/link";
 import {statusColor} from "@/utils/StatusColor";
 import {status} from "@/libs/enums";
 import {priorityIcon} from "@/utils/PriorityIcon";
 
-const TasksTableView = ({tasks}:{tasks:Task[]|null})=>{
+const TasksTableView = ({tasks}:{tasks:Tasks[]|null})=>{
 
     if(!tasks||tasks.length===0){
         return(

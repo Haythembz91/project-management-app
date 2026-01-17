@@ -1,11 +1,11 @@
 import React from "react";
-import {Task} from "@/libs/interfaces";
+import {Tasks} from "@/libs/interfaces";
 import {statusColor} from "@/utils/StatusColor";
 import  {status} from "@/libs/enums";
 import Link from "next/link";
 import {priorityIcon} from "@/utils/PriorityIcon";
 
-const CardViewTasks = ({tasks}:{tasks:Task[]|null})=>{
+const CardViewTasks = ({tasks}:{tasks:Tasks[]|null})=>{
 
     if(!tasks||tasks.length===0){
         return(

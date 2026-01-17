@@ -2,7 +2,7 @@
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import React, {useEffect} from "react";
 import {useParams} from "next/navigation";
-import {Note, Task} from "@/libs/interfaces";
+import {Note, Tasks} from "@/libs/interfaces";
 import {IoArrowBackOutline} from "react-icons/io5";
 import Link from "next/link";
 import {priorityIcon} from "@/utils/PriorityIcon";
@@ -14,7 +14,7 @@ import getTask from "@/utils/GetTask";
 const Home = ()=>{
 
     const {taskId} = useParams()
-    const [task,setTask] = React.useState<Task|null>(null)
+    const [task,setTask] = React.useState<Tasks|null>(null)
     const [notes,setNotes] = React.useState<Note[]|null>(null)
     const [error,setError] = React.useState<string>('')
     const [isLoading,setIsLoading] = React.useState<boolean>(false)

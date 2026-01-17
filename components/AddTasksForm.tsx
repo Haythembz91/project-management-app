@@ -3,14 +3,14 @@ import {priorityList, statusList} from "@/libs/const";
 import React, {useEffect} from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import {useParams, useRouter} from "next/navigation"
-import {Task} from "@/libs/interfaces";
+import {Tasks} from "@/libs/interfaces";
 import getTask from "@/utils/GetTask";
 
 const AddTasksForm = ()=>{
 
     const [error, setError] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
-    const [task,setTask] = React.useState<Task|null>(null)
+    const [task,setTask] = React.useState<Tasks|null>(null)
     const [progress, setProgress] = React.useState(0)
     const router = useRouter()
     const {projectId,taskId}=useParams()
