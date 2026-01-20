@@ -18,6 +18,7 @@ const Home = ()=>{
     const [notes,setNotes] = React.useState<Note[]|null>(null)
     const [error,setError] = React.useState<string>('')
     const [isLoading,setIsLoading] = React.useState<boolean>(false)
+    const [isDeleting,setIsDeleting] = React.useState<boolean>(false)
     const formRef = React.useRef<HTMLFormElement>(null)
 
 
@@ -59,6 +60,27 @@ const Home = ()=>{
         }
     }
 
+    const handleDelete= async()=>{
+        setIsDeleting(true)
+        try{
+                const response = await FetchWithAuth("/api/tasks/delete",{
+                method:'DELETE',
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({taskId:taskId as string,
+                    projectId:task?.project_id as string,
+                })
+            })
+            if(response.status===200){
+                const data = await response.json()
+                window.location.href = `/projects/${task?.project_id}`
+            }
+        }catch(error){
+            console.error(error)
+        }finally{
+            setIsDeleting(false)
+        }
+    }
+
     useEffect(()=>{
         const fetchTask = async()=>{
             const result = await getTask(taskId as string)
@@ -90,8 +112,18 @@ const Home = ()=>{
                     <h1 className={'mb-3'}>Project: {task.project_name}</h1>
                     <h2>Task: {task.name}</h2>
                 </div>
-                <div>
-                    <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}>Edit task</Link>
+                <div className="d-flex">
+                    <div className="px-1">
+                        <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}>Edit task</Link>
+                    </div>
+                    <div className="px-1">
+                        {!isDeleting? <button className={'btn bg-danger text-white'} onClick={handleDelete}>Delete project</button> :
+                            <button className="btn bg-danger text-white w-100" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                <span className={'px-1'} role="status">Deleting...</span>
+                            </button>
+                        }
+                    </div>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>

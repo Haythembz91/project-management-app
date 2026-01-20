@@ -49,7 +49,7 @@ export async function POST (req:NextRequest){
             return NextResponse.json({error:"Progress must be between 0 and 100"},{status:422})
         }
         try{
-            const addTask = await pool.query("INSERT INTO tasks (project_id,name,description,priority,status,assigned_to,task_start_date,task_due_date,progress) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *",[projectId,name,description,priority,status,assignedTo,taskStartDate,taskDueDate,taskProgress])
+            const addTask = await pool.query("INSERT INTO tasks (project_id,name,description,priority,status,assigned_to,task_start_date,task_due_date,progress,user_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *",[projectId,name,description,priority,status,assignedTo,taskStartDate,taskDueDate,taskProgress,user.id])
             if(addTask.rowCount===0){
                 return NextResponse.json({error:"Internal server error"},{status:500})
             }
