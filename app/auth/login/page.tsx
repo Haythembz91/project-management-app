@@ -63,7 +63,7 @@ const Home = ()=>{
             <div>
                 <form onSubmit={handleLogin}>
                     <div className="form-floating mb-3">
-                        <input required type="email" name={'email'} className="form-control" id="email" placeholder="email"/>
+                        <input required name={'email'} className="form-control" id="email" placeholder="email"/>
                         <label htmlFor="email">Email address</label>
                     </div>
                     <div className="form-floating mb-3">

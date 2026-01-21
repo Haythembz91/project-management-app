@@ -14,6 +14,7 @@ import {status} from "@/libs/enums";
 import NotesContainer from "@/components/NotesContainer";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import {FaChartGantt} from "react-icons/fa6";
+import Modal from "@/components/Modal";
 
 const Home = ()=>{
     const {projectId} = useParams()
@@ -24,7 +25,6 @@ const Home = ()=>{
     const [isLoading,setIsLoading] = React.useState<boolean>(false)
     const [notes,setNotes] = React.useState<Note[]|null>(null)
     const formRef = React.useRef<HTMLFormElement>(null)
-    const [isDeleting,setIsDeleting] = React.useState<boolean>(false)
     const handlePost = async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         setError('')
@@ -65,26 +65,6 @@ const Home = ()=>{
         }
     }
 
-    const handleDelete= async()=>{
-        setIsDeleting(true)
-        try{
-                const response = await FetchWithAuth("/api/projects/delete",{
-                method:'DELETE',
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({projectId:projectId as string})
-            })
-            if(response.status===200){
-                const data = await response.json()
-                window.location.href = '/projects'
-            }
-        }catch(error){
-            console.error(error)
-        }finally{
-            setIsDeleting(false)
-        }
-    }
-
-
     useEffect(()=>{
         const getProject = async ()=>{
             const p = await GetProject({id:projectId as string})
@@ -119,14 +99,7 @@ const Home = ()=>{
                     <div className="px-1">
                         <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/edit'}>Edit project</Link>
                     </div>
-                    <div className="px-1">
-                        {!isDeleting? <button className={'btn bg-danger text-white'} onClick={handleDelete}>Delete project</button> :
-                            <button className="btn bg-danger text-white w-100" type="button" disabled>
-                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                                <span className={'px-1'} role="status">Deleting...</span>
-                            </button>
-                        }
-                    </div>
+                    <Modal projectId={projectId as string}></Modal>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-sm-2 g-4 mb-3'}>

@@ -13,6 +13,11 @@ function isUsernameValid(username: string) {
     const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
     return usernameRegex.test(username);
 }
+
+const isEmailValid = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
 const Home = ()=>{
 
     const [error, setError] = React.useState('')
@@ -29,6 +34,11 @@ const Home = ()=>{
         const username = formData.get('username')
         if(!isUsernameValid(username as string)){
             setError('Username must be 3-20 characters long and contain only letters, numbers, and underscores.')
+            setIsLoading(false)
+            return
+        }
+        if(!isEmailValid(formData.get('email') as string)){
+            setError('Invalid email')
             setIsLoading(false)
             return
         }
@@ -93,7 +103,7 @@ const Home = ()=>{
                         <label htmlFor="username">Username</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input required type="email" name={'email'} className="form-control" id="email" placeholder="email"/>
+                        <input required name={'email'} className="form-control" id="email" placeholder="email"/>
                         <label htmlFor="email">Email address</label>
                     </div>
                     <div className="form-floating mb-3">

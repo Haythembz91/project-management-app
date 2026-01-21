@@ -10,6 +10,7 @@ import {statusColor} from "@/utils/StatusColor";
 import {status} from "@/libs/enums";
 import NotesContainer from "@/components/NotesContainer";
 import getTask from "@/utils/GetTask";
+import DeleteTaskModal from "@/components/DeleteTaskModal";
 
 const Home = ()=>{
 
@@ -60,27 +61,7 @@ const Home = ()=>{
         }
     }
 
-    const handleDelete= async()=>{
-        setIsDeleting(true)
-        try{
-                const response = await FetchWithAuth("/api/tasks/delete",{
-                method:'DELETE',
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({taskId:taskId as string,
-                    projectId:task?.project_id as string,
-                })
-            })
-            if(response.status===200){
-                const data = await response.json()
-                window.location.href = `/projects/${task?.project_id}`
-            }
-        }catch(error){
-            console.error(error)
-        }finally{
-            setIsDeleting(false)
-        }
-    }
-
+    
     useEffect(()=>{
         const fetchTask = async()=>{
             const result = await getTask(taskId as string)
@@ -116,14 +97,7 @@ const Home = ()=>{
                     <div className="px-1">
                         <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}>Edit task</Link>
                     </div>
-                    <div className="px-1">
-                        {!isDeleting? <button className={'btn bg-danger text-white'} onClick={handleDelete}>Delete project</button> :
-                            <button className="btn bg-danger text-white w-100" type="button" disabled>
-                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                                <span className={'px-1'} role="status">Deleting...</span>
-                            </button>
-                        }
-                    </div>
+                    <DeleteTaskModal projectId={task.project_id as string} taskId={taskId as string} ></DeleteTaskModal>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>
