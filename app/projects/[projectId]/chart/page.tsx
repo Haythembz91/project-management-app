@@ -8,6 +8,7 @@ import {useParams} from "next/navigation";
 import {ViewMode, Task} from "@toyokoh/frappe-gantt-react";
 import Link from "next/link";
 import {IoMdAdd} from "react-icons/io";
+import { viewModeList } from '@/libs/const';
 
 const Gantt = dynamic(
     () =>
@@ -20,6 +21,7 @@ export default function Home() {
     const [tasks,setTasks] = React.useState<Task[]|null>(null)
     const [projectName,setProjectName] = React.useState('')
     const {projectId} = useParams()
+    const [viewMode,setViewMode] = React.useState<ViewMode>(ViewMode.Week)
 
     useEffect(()=>{
         const getProject = async ()=>{
@@ -61,14 +63,21 @@ export default function Home() {
         <main className={'container-fluid'}>
             <BackButton></BackButton>
             <h1>Project: {projectName}</h1>
-            {tasks.length>0?<Gantt tasks={tasks} viewMode={ViewMode.Month} />:
+            <div className={'col-md-6 m-3'}>
+                <label htmlFor={'viewMode'} className={'form-label'}>View Mode:</label>
+                <select id={'viewMode'} className="form-select mb-3" onChange={(e)=>setViewMode(p=>e.target.value as ViewMode)} aria-label="Default select example">
+                    <option defaultValue={'View Mode'}>View Mode</option>
+                    {viewModeList.map((viewMode)=>(<option key={viewMode} value={viewMode}>{viewMode}</option>))}
+                </select>
+            </div>
+            {tasks.length>0?<Gantt tasks={tasks} viewMode={viewMode} />:
             <div className={'d-flex flex-column align-items-center my-5'}>
                 <p>No tasks found</p>
                 <div className={'mb-3'}>
-                <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
-                    <IoMdAdd /> Add task
-                </Link>
-                </div>        
+                    <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
+                        <IoMdAdd /> Add task
+                    </Link>
+                </div>     
             </div>
             }
         </main>

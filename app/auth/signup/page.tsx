@@ -29,6 +29,13 @@ const Home = ()=>{
         setIsLoading(true)
         setError('')
         const formData = new FormData(e.currentTarget)
+        for (const value of formData.values()) {
+            if(!value){
+                setError('All fields are required')
+                setIsLoading(false)
+                return
+            }
+        }
         const password = formData.get('password')
         const confirmPassword = formData.get('confirmPassword')
         const username = formData.get('username')
@@ -99,19 +106,19 @@ const Home = ()=>{
             <div>
                 <form onSubmit={handleSignup}>
                     <div className="form-floating mb-3">
-                        <input required type="text" name={'username'} className="form-control" id="username" placeholder="username"/>
+                        <input type="text" name={'username'} className="form-control" id="username" placeholder="username"/>
                         <label htmlFor="username">Username</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input required name={'email'} className="form-control" id="email" placeholder="email"/>
+                        <input name={'email'} className="form-control" id="email" placeholder="email"/>
                         <label htmlFor="email">Email address</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input required type="password" name={'password'} className="form-control" id="password" placeholder="Password"/>
+                        <input type="password" name={'password'} className="form-control" id="password" placeholder="Password"/>
                         <label htmlFor="password">Password</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input required type="password" name={'confirmPassword'} className="form-control" id="confirmPassword" placeholder="Confirm Password"/>
+                        <input type="password" name={'confirmPassword'} className="form-control" id="confirmPassword" placeholder="Confirm Password"/>
                         <label htmlFor="confirmPassword">Confirm Password</label>
                     </div>
                     {error&&<div className="alert alert-danger mb-3" role="alert">
