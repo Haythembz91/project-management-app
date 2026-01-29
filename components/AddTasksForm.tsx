@@ -68,7 +68,6 @@ const AddTasksForm = ()=>{
         const fetchTask = async () => {
             return getTask(taskId as string);
         };
-
         if(taskId){
             fetchTask().then(r=>{
                 setTask(r.task);
@@ -88,6 +87,7 @@ const AddTasksForm = ()=>{
             </div>
         )
     }
+
     return (
         <section className={'container-fluid'}>
             <form onSubmit={handleTaskSubmit} className={'col-md-6'}>
