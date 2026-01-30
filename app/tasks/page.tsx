@@ -69,9 +69,9 @@ const Home =()=>{
 
 
     return(
-        <div>
+        <main>
             <div className={'m-3'}>
-                <form className={'d-flex'}>
+                <form className={'d-md-flex'}>
                     <div className={'mb-3 d-flex align-items-center'}>
                         <label htmlFor="from" className={'form-label p-2'}>From:</label>
                         <input type="date" value={from} onChange={(e)=>setFrom(p=>e.target.value)} id={'from'} className={'form-control'}/>
@@ -98,7 +98,7 @@ const Home =()=>{
                     viewMode={viewMode as ViewMode}
                 />
             }
-        </div>
+        </main>
     )
 }
 

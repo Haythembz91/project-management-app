@@ -148,12 +148,12 @@ const ProjectsContainer = ({projects,setProjects}:{projects:Project[],setProject
                 {projects.map((project,index)=>(
                     <tr key={project.id}>
                         <td>{index+1}</td>
-                        <td className={'name-cell'}>
+                        <td>
                             <Link href={'/projects/'+project.id} className={'text-dark fw-semibold'}>
                                 {project.name}
                             </Link>
                         </td>
-                        <td className={'description-cell'}>{project.description}</td>
+                        <td>{project.description}</td>
                         <td>{project.site}</td>
                         <td>{project.client}</td>
                         <td>{project.manager}</td>

@@ -3,11 +3,6 @@ th.project-table-th{
     cursor: pointer;
 }
 
-td.description-cell {
-    max-width: 300px;
-    white-space: normal;
-    word-break: break-word;
-}
 
 .shadow-card:hover{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -17,11 +12,7 @@ td.description-cell {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-td.name-cell {
-    max-width: 200px;
-    white-space: normal;
-    word-break: break-word;
-}
+
 
 .grdbtn{
     background:linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89));
@@ -48,8 +39,8 @@ td.name-cell {
 
 
 .create-btn{
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
     background:linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89));   
     cursor: pointer;
