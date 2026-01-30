@@ -137,9 +137,14 @@ const Home = ()=>{
                     <p className={'my-0'}>{Math.round(project.avg_progress)||0}% complete</p>
                 </div>
             </div>
-            <div className={'mb-3'}>
+            <div className={'d-none d-md-block mb-3'}>
                 <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
                     <IoMdAdd /> Add task
+                </Link>
+            </div>
+            <div className={'d-md-none create-btn h1 d-flex align-items-center justify-content-center position-fixed bottom-0 end-0 mb-4 me-4'}>
+                <Link className={'text-white d-flex align-items-center justify-content-center my-auto'} href={'/projects/'+projectId+'/tasks/create'}>
+                    <span>+</span>
                 </Link>
             </div>
             <div className={'mb-3'}>

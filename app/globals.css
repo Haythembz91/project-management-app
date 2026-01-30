@@ -45,3 +45,16 @@ td.name-cell {
 .backBtn:hover{
     text-decoration: underline;
 }
+
+
+.create-btn{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background:linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89));   
+    cursor: pointer;
+}
+
+.create-btn a{
+    all: unset;
+}

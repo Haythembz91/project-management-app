@@ -42,10 +42,15 @@ const Home = ()=>{
     }
     return (
         <div className={'container-fluid mt-3'}>
-            <div className={'d-flex justify-content-end'}>
-                <Link className={'btn btn-outline-dark'} href={'/projects/create'}>
-                    <IoMdAdd /> Add project
+            <div className={'d-md-none create-btn h1 d-flex align-items-center justify-content-center position-fixed bottom-0 end-0 mb-4 me-4'}>
+                <Link className={'text-white d-flex align-items-center justify-content-center my-auto'} href={'/projects/create'}>
+                    <span>+</span>
                 </Link>
+            </div>
+            <div className={'d-none d-md-block'}>
+                    <Link className={'btn btn-outline-dark'} href={'/projects/create'}>
+                        <IoMdAdd /> Add project
+                    </Link>
             </div>
             <div className={'mb-3'}>
                 <h1 className={'h1 text-center'}>Projects</h1>
