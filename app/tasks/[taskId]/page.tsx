@@ -11,6 +11,7 @@ import {status} from "@/libs/enums";
 import NotesContainer from "@/components/NotesContainer";
 import getTask from "@/utils/GetTask";
 import DeleteTaskModal from "@/components/DeleteTaskModal";
+import { FiEdit } from "react-icons/fi";
 
 const Home = ()=>{
 
@@ -95,26 +96,26 @@ const Home = ()=>{
                 </div>
                 <div className="d-flex">
                     <div className="px-1">
-                        <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}>Edit task</Link>
+                        <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}><span><FiEdit /></span> Edit task</Link>
                     </div>
                     <DeleteTaskModal projectId={task.project_id as string} taskId={taskId as string} ></DeleteTaskModal>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>
-                <p className={'col'}>Description: {task.description}</p>
-                <p className={'col'}>Priority: {priorityIcon(task.priority)} {task.priority}</p>
+                <p className={'col'}><span className="fw-bold">Description: </span>{task.description}</p>
+                <p className={'col'}><span className="fw-bold">Priority: </span>{priorityIcon(task.priority)} {task.priority}</p>
                 <div className={'col'}>
-                    <p>Status: <span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span></p>
+                    <p><span className="fw-bold">Status: </span><span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span></p>
                 </div>
-                <p className={'col'}>Assigned to: {task.assigned_to}</p>
-                <p className={'col'}>Start date: {new Date(task.task_start_date).toLocaleDateString()}</p>
-                <p className={'col'}>Due date: {new Date(task.task_due_date).toLocaleDateString()}</p>
+                <p className={'col'}><span className="fw-bold">Assigned to: </span>{task.assigned_to}</p>
+                <p className={'col'}><span className="fw-bold">Start date: </span>{new Date(task.task_start_date).toLocaleDateString()}</p>
+                <p className={'col'}><span className="fw-bold">Due date: </span>{new Date(task.task_due_date).toLocaleDateString()}</p>
                 <div className={'col'}>
-                    <p className="card-subtitle">Progress:</p>
+                    <p className="fw-bold">Progress:</p>
                     <div style={{height:'12px'}} className={'border border-1 rounded-3 overflow-hidden bg-light my-1'}>
                         <p className={'m-0 py-2'} style={{backgroundImage:'linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89))',width:`${task.progress}%`}}></p>
                     </div>
-                    <p className={'my-0'}>{Math.round(task.progress)}% complete</p>
+                    <p className={'my-0'}>{Math.round(task.progress)}% completed</p>
                 </div>
             </div>
             <div className={'my-3'}>

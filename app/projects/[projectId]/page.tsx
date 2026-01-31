@@ -15,6 +15,7 @@ import NotesContainer from "@/components/NotesContainer";
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import {FaChartGantt} from "react-icons/fa6";
 import Modal from "@/components/Modal";
+import { FiEdit } from "react-icons/fi";
 
 const Home = ()=>{
     const {projectId} = useParams()
@@ -91,50 +92,50 @@ const Home = ()=>{
             <div className={'mb-3'}>
                 <Link href={'/projects'}><IoArrowBackOutline /> Back to projects</Link>
             </div>
-            <div className={'d-flex justify-content-between mb-3'}>
-                <div>
-                    <h1>{project.name}</h1>
-                </div>
-                <div className="d-flex">
+            <div className={'d-md-flex justify-content-between mb-3'}>
+                <div className="d-flex justify-content-end mb-3">
                     <div className="px-1">
-                        <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/edit'}>Edit project</Link>
+                        <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/edit'}><FiEdit></FiEdit> Edit project</Link>
                     </div>
                     <Modal projectId={projectId as string}></Modal>
                 </div>
+                <div className="mb-3">
+                    <h1>{project.name}</h1>
+                </div>    
             </div>
             <div className={'row row-cols-1 row-cols-sm-2 g-4 mb-3'}>
                 <div className={'col'}>
-                    <p className={'m-0'}>Start: {new Date(project.start_date).toLocaleDateString()}</p>
+                    <p className={'m-0'}><span className="fw-bold">Start: </span>{new Date(project.start_date).toLocaleDateString()}</p>
                 </div>
                 <div className={'col'}>
-                    <p className={'m-0'}>Due: {new Date(project.end_date).toLocaleDateString()}</p>
+                    <p className={'m-0'}><span className="fw-bold">Due: </span>{new Date(project.end_date).toLocaleDateString()}</p>
                 </div>
                 <div className={'col'}>
-                    <p className={'m-0'}>Client: {project.client}</p>
+                    <p className={'m-0'}><span className="fw-bold">Client: </span>{project.client}</p>
                 </div>
                 <div className={'col'}>
-                    <p className={'m-0'}>Location: {project.site}</p>
+                    <p className={'m-0'}><span className="fw-bold">Location: </span>{project.site}</p>
                 </div>
                 <div className={'col'}>
-                    <p className={'m-0'}>Status: <span className={'badge'+' '+statusColor(project.status as status)}>{project.status}</span></p>
+                    <p className={'m-0'}><span className="fw-bold">Status: </span><span className={'badge'+' '+statusColor(project.status as status)}>{project.status}</span></p>
                 </div>
                 <div className={'col'}>
-                    <p className={'m-0'}>Budget: ${project.budget}</p>
+                    <p className={'m-0'}><span className="fw-bold">Budget: </span>${project.budget}</p>
                 </div>
                 <div className={'col'}>
-                    <p className={'m-0'}>Manager: {project.manager}</p>
+                    <p className={'m-0'}><span className="fw-bold">Manager: </span>{project.manager}</p>
                 </div>
             </div>
             <div className={'col-md-6 mb-3'}>
                 <div className={'col'}>
-                    <p className={''}>Description: {project.description}</p>
+                    <p className={''}><span className="fw-bold">Description: </span>{project.description}</p>
                 </div>
                 <div className={'col'}>
-                    <p className="card-subtitle">Progress:</p>
+                    <p className="card-subtitle fw-bold">Progress:</p>
                     <div style={{height:'12px'}} className={'border border-1 rounded-3 overflow-hidden bg-light my-1'}>
                         <p className={'m-0 py-2'} style={{backgroundImage:'linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89))',width:`${project.avg_progress||0}%`}}></p>
                     </div>
-                    <p className={'my-0'}>{Math.round(project.avg_progress)||0}% complete</p>
+                    <p className={'my-0'}>{Math.round(project.avg_progress)||0}% completed</p>
                 </div>
             </div>
             <div className={'d-none d-md-block mb-3'}>

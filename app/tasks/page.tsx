@@ -15,7 +15,7 @@ const Gantt = dynamic(
 const Home =()=>{
 
     const [tasks,setTasks] = React.useState<Task[]|null>(null)
-    const [from,setFrom] = React.useState<string>(new Date().toISOString().split('T')[0])
+    const [from,setFrom] = React.useState<string>(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0])
     const today = new Date ()
     const sevendays = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
     const [to,setTo] = React.useState<string>(sevendays.toISOString().split('T')[0])
@@ -69,21 +69,21 @@ const Home =()=>{
 
 
     return(
-        <main>
-            <div className={'m-3'}>
+        <main className={'p-3'}>
+            <div>
                 <form className={'d-md-flex'}>
                     <div className={'mb-3 d-flex align-items-center'}>
-                        <label htmlFor="from" className={'form-label p-2'}>From:</label>
+                        <label htmlFor="from" className={'form-label fw-bold p-2'}>From:</label>
                         <input type="date" value={from} onChange={(e)=>setFrom(p=>e.target.value)} id={'from'} className={'form-control'}/>
                     </div>
                     <div className={'mb-3 d-flex align-items-center'}>
-                        <label htmlFor="to" className={'form-label p-2'}>To:</label>
+                        <label htmlFor="to" className={'form-label fw-bold p-2'}>To:</label>
                         <input type="date" value={to} onChange={(e)=>setTo(p=>e.target.value)} min={from} id={'to'} className={'form-control'}/>
                     </div>
                 </form>
             </div>
-            <div className={'col-md-6 m-3'}>
-                <label htmlFor={'viewMode'} className={'form-label'}>View Mode:</label>
+            <div className={'d-flex col-md-6 p-2'}>
+                <label htmlFor={'viewMode'} className={'form-label fw-bold'}>View Mode:</label>
                 <select id={'viewMode'} className="form-select mb-3" onChange={(e)=>setViewMode(p=>e.target.value as ViewMode)} aria-label="Default select example">
                     <option defaultValue={'View Mode'}>View Mode</option>
                     {viewModeList.map((viewMode)=>(<option key={viewMode} value={viewMode}>{viewMode}</option>))}

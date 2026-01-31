@@ -1,5 +1,6 @@
 import React from "react";
 import FetchWithAuth from "@/utils/FetchWithAuth";
+import {MdDelete} from 'react-icons/md'
 const Modal = ({projectId}:{projectId:string})=>{
 
 
@@ -26,7 +27,7 @@ const Modal = ({projectId}:{projectId:string})=>{
 
     return(
         <div>
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal" className={'btn bg-danger text-white'}>Delete project</button>
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" className={'btn bg-danger text-white'}><MdDelete /> Delete project</button>
             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
