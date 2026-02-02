@@ -49,3 +49,7 @@ th.project-table-th{
 .create-btn a{
     all: unset;
 }
+
+.hamburgerMenu{
+    all:unset;
+}

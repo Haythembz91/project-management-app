@@ -1,17 +1,18 @@
 'use client'
-import logo from '@/public/assets/logo.png'
 import Link from "next/link";
 import {useAuth} from "@/contexts/UserContext";
 import {useRouter} from "next/navigation";
-import React from "react";
+import {useState} from "react";
 import GetUser from "@/utils/GetUser";
 import OffCanvas from './OffCanvas';
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 const Header = ()=>{
 
     const {user,setUser} = useAuth()
     const router = useRouter()
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showMenu,setShowMenu] = useState<boolean>(false)
     const handleLogout = async ()=>{
         setIsLoading(true)
         try{
@@ -32,29 +33,29 @@ const Header = ()=>{
     }
     return(
         <header className={'sticky-top'}>
-            <nav style={{backgroundColor:'#f7f7f2'}} className={'navbar navbar-expand-md'}>
-                <div className={'container-fluid'}>
+            <nav className={'navbar navbar-expand-md'}>
+                <div className={'container-fluid px-2'}>
                     <div className={'navbar-brand'}>
                         <Link href={'/'}>
-                            <img style={{height:'50px'}} src={logo.src} alt={'logo'}></img>
+                            <img style={{height:'50px'}} src={"https://res.cloudinary.com/dmgfsayir/image/upload/v1770070255/ChatGPT_Image_Feb_2_2026_11_06_15_PM-modified_pioxta.png"} alt={'logo'}></img>
                         </Link>
                     </div>
                     <div className={'d-none d-md-flex justify-content-between w-100'}>
                         <ul className={'navbar-nav nav-underline'}>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} href={'/'}>Home</Link>
+                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/'}>Home</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} href={'/projects'}>Projects</Link>
+                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/projects'}>Projects</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} href={'/tasks'}>Tasks</Link>
+                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/tasks'}>Tasks</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} href={'/reports'}>Reports</Link>
+                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/reports'}>Reports</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} href={'/notifications'}>Notifications</Link>
+                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/notifications'}>Notifications</Link>
                             </li>
                         </ul>
                         {user?<div className={'d-flex align-content-center'}>
@@ -79,8 +80,11 @@ const Header = ()=>{
                             </div>
                         }
                     </div>
-                    <OffCanvas user={user} isLoading={isLoading} handleLogout={handleLogout}></OffCanvas>
+                    <button onClick={()=>setShowMenu(p=>!p)} className="d-md-none fs-1 fw-bold text-dark hamburgerMenu">
+                        <RxHamburgerMenu />
+                    </button>
                 </div>
+                {showMenu&&<OffCanvas setShowMenu={setShowMenu} user={user} isLoading={isLoading} handleLogout={handleLogout}></OffCanvas>}
             </nav>
         </header>
     )
