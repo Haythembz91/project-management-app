@@ -93,14 +93,14 @@ const Home = ()=>{
                 <Link href={'/projects'}><IoArrowBackOutline /> Back to projects</Link>
             </div>
             <div className={'d-md-flex justify-content-between mb-3'}>
+                <div className="mb-3">
+                    <h1>{project.name}</h1>
+                </div>
                 <div className="d-flex justify-content-end mb-3">
                     <div className="px-1">
                         <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/edit'}><FiEdit></FiEdit> Edit project</Link>
                     </div>
                     <Modal projectId={projectId as string}></Modal>
-                </div>
-                <div className="mb-3">
-                    <h1>{project.name}</h1>
                 </div>    
             </div>
             <div className={'row row-cols-1 row-cols-sm-2 g-4 mb-3'}>

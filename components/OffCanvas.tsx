@@ -1,45 +1,26 @@
-'use client'
-import logo from '@/public/assets/logo.png'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import Link from "next/link";
-import {useAuth} from "@/contexts/UserContext";
-import {useRouter} from "next/navigation";
-import React from "react";
-import GetUser from "@/utils/GetUser";
-import OffCanvas from './OffCanvas';
+import {User} from "@/libs/interfaces";
+import logo from '@/public/assets/logo.png'
 
-const Header = ()=>{
-
-    const {user,setUser} = useAuth()
-    const router = useRouter()
-    const [isLoading, setIsLoading] = React.useState(false);
-    const handleLogout = async ()=>{
-        setIsLoading(true)
-        try{
-            const response = await fetch('/api/auth/logout',{
-                method:'POST',
-                credentials:'include'
-            })
-            if(response.ok){
-                const data = await GetUser()
-                setUser(data)
-                router.push('/')
-            }
-        }catch(err){
-            console.log(err)
-        }finally {
-            setIsLoading(false)
-        }
-    }
+const OffCanvas = ({user,handleLogout,isLoading}:{user:User|null,handleLogout:()=>void,isLoading:boolean})=>{
     return(
-        <header className={'sticky-top'}>
-            <nav style={{backgroundColor:'#f7f7f2'}} className={'navbar navbar-expand-md'}>
-                <div className={'container-fluid'}>
+        <div>
+            <a className="d-md-none h2 fw-bold" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <RxHamburgerMenu />
+            </a>
+
+            <div className="offcanvas offcanvas-start" tabIndex={-1} id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div className="offcanvas-header">
                     <div className={'navbar-brand'}>
                         <Link href={'/'}>
                             <img style={{height:'50px'}} src={logo.src} alt={'logo'}></img>
                         </Link>
                     </div>
-                    <div className={'d-none d-md-flex justify-content-between w-100'}>
+                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div className="offcanvas-body d-md-none">
+                    <div className={'d-flex flex-column align-items-center'}>
                         <ul className={'navbar-nav nav-underline'}>
                             <li className={'nav-item'}>
                                 <Link className={'nav-link'} href={'/'}>Home</Link>
@@ -79,10 +60,10 @@ const Header = ()=>{
                             </div>
                         }
                     </div>
-                    <OffCanvas user={user} isLoading={isLoading} handleLogout={handleLogout}></OffCanvas>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </div>
     )
 }
-export default Header
+
+export default OffCanvas
