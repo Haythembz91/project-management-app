@@ -43,28 +43,28 @@ const Header = ()=>{
                     <div className={'d-none d-md-flex justify-content-between w-100'}>
                         <ul className={'navbar-nav nav-underline'}>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/'}>Home</Link>
+                                <Link className={'nav-link text-light p-1 fw-bold'} href={'/'}>Home</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/projects'}>Projects</Link>
+                                <Link className={'nav-link text-light p-1 fw-bold'} href={'/projects'}>Projects</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/tasks'}>Tasks</Link>
+                                <Link className={'nav-link text-light p-1 fw-bold'} href={'/tasks'}>Tasks</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/reports'}>Reports</Link>
+                                <Link className={'nav-link text-light p-1 fw-bold'} href={'/reports'}>Reports</Link>
                             </li>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link text-dark p-1 fw-bold'} href={'/notifications'}>Notifications</Link>
+                                <Link className={'nav-link text-light p-1 fw-bold'} href={'/notifications'}>Notifications</Link>
                             </li>
                         </ul>
                         {user?<div className={'d-flex align-content-center'}>
                                 <div className={'px-2 d-flex align-content-center'}>
-                                    <p className={'fw-semibold my-md-auto text-dark'}>Welcome, {user.username}</p>
+                                    <p className={'fw-semibold my-md-auto text-light'}>Welcome, {user.username}</p>
                                 </div>
                                 <div className={'px-2'}>
-                                    {!isLoading?<button className={'btn btn-outline-dark'} onClick={handleLogout}>Logout</button>:
-                                        <button className="btn btn-outline-dark w-100" type="button" disabled>
+                                    {!isLoading?<button className={'btn btn-outline-light'} onClick={handleLogout}>Logout</button>:
+                                        <button className="btn btn-outline-light w-100" type="button" disabled>
                                             <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                             <span className={'px-1'} role="status">Logging out...</span>
                                         </button>}
@@ -72,15 +72,15 @@ const Header = ()=>{
                             </div>:
                             <div className={'d-flex'}>
                                 <div className={'px-1'}>
-                                    <Link className={'btn btn-outline-dark'} href={'/auth/login'}>Login</Link>
+                                    <Link className={'btn btn-outline-light'} href={'/auth/login'}>Login</Link>
                                 </div>
                                 <div className={'px-1'}>
-                                    <Link className={'btn btn-outline-dark'} href={'/auth/signup'}>Signup</Link>
+                                    <Link className={'btn btn-outline-light'} href={'/auth/signup'}>Signup</Link>
                                 </div>
                             </div>
                         }
                     </div>
-                    <button onClick={()=>setShowMenu(p=>!p)} className="d-md-none fs-1 fw-bold text-dark hamburgerMenu">
+                    <button onClick={()=>setShowMenu(p=>!p)} className="d-md-none fs-1 fw-bold text-light hamburgerMenu">
                         <RxHamburgerMenu />
                     </button>
                 </div>
