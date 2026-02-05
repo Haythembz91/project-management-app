@@ -32,8 +32,8 @@ const OffCanvas = ({user,handleLogout,isLoading,setShowMenu}:{user:User|null,han
                     </div>
                     <div className={'px-2'}>
                         {!isLoading?<button className={'btn btn-outline-light'} onClick={handleLogout}>Logout</button>:
-                            <button className="w-100" type="button" disabled>
-                                <span className="spinner-border spinner-border-sm text-light" aria-hidden="true"></span>
+                            <button className="btn btn-outline-light w-100" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                 <span className={'px-1'} role="status">Logging out...</span>
                             </button>}
                     </div>

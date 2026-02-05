@@ -89,19 +89,21 @@ const Home = ()=>{
 
     return (
         <div className={'container-fluid'}>
-            <div className={'mb-3'}>
-                <Link href={'/projects'}><IoArrowBackOutline /> Back to projects</Link>
-            </div>
-            <div className={'d-md-flex justify-content-between mb-3'}>
-                <div className="mb-3">
-                    <h1>{project.name}</h1>
-                </div>
-                <div className="d-flex justify-content-end mb-3">
+            <div className="d-flex justify-content-end">
                     <div className="px-1">
-                        <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/edit'}><FiEdit></FiEdit> Edit project</Link>
+                        <Link className={'btn fs-2 p-1'} href={'/projects/'+projectId+'/edit'}><FiEdit></FiEdit></Link>
                     </div>
                     <Modal projectId={projectId as string}></Modal>
-                </div>    
+                </div>
+            <div className={'mb-3'}>
+                <Link href={'/projects'}><IoArrowBackOutline /> Back to projects</Link>
+                 
+            </div>
+            <div className={'d-flex justify-content-between align-items-center mb-3'}>
+                <div className="">
+                    <h1 className={'m-0'}>{project.name}</h1>
+                </div>
+                
             </div>
             <div className={'row row-cols-1 row-cols-sm-2 g-4 mb-3'}>
                 <div className={'col'}>
@@ -138,11 +140,6 @@ const Home = ()=>{
                     <p className={'my-0'}>{Math.round(project.avg_progress)||0}% completed</p>
                 </div>
             </div>
-            <div className={'d-none d-md-block mb-3'}>
-                <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
-                    <IoMdAdd /> Add task
-                </Link>
-            </div>
             <div className={'d-md-none create-btn h1 d-flex align-items-center justify-content-center position-fixed bottom-0 end-0 mb-4 me-4'}>
                 <Link className={'text-white d-flex align-items-center justify-content-center my-auto'} href={'/projects/'+projectId+'/tasks/create'}>
                     <span>+</span>
@@ -154,19 +151,28 @@ const Home = ()=>{
                 </Link>
             </div>
             <div className={'mb-3'}>
-                <h3 className={'h3 mb-3'}>Tasks:</h3>
-                <button
-                    className="btn btn-outline-dark d-flex align-items-center gap-2"
-                    onClick={() => setCardView((prev) => !prev)}
-                    aria-label={cardView ? "Switch to table view" : "Switch to card view"}>
-                    {cardView ? <MdTableRows size={20} /> : <MdViewModule size={20} />}
-                    <span className="d-none d-sm-inline">{cardView ? "Switch to Table View" : "Switch to Card View"}</span>
-                </button>
+                <div className="d-flex justify-content-between">
+                    <h3 className={'h3 mb-3'}>Tasks:</h3>
+                    <div className={'d-none d-md-block mb-3'}>
+                        <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
+                            <IoMdAdd /> Add task
+                        </Link>
+                    </div>
+                </div>
             </div>
             <div className={'mb-3'}>
+                {(tasks&&tasks.length>0)&&<div>
+                    <button
+                        className="btn btn-outline-dark d-flex align-items-center gap-2"
+                        onClick={() => setCardView((prev) => !prev)}
+                        aria-label={cardView ? "Switch to table view" : "Switch to card view"}>
+                        {cardView ? <MdTableRows size={20} /> : <MdViewModule size={20} />}
+                        <span className="d-none d-sm-inline">{cardView ? "Switch to Table View" : "Switch to Card View"}</span>
+                    </button>
+                </div>}
                 {!cardView?<TasksTableView tasks={tasks}></TasksTableView>:<CardViewTasks tasks={tasks}></CardViewTasks>}
             </div>
-            <div className={'my-3'}>
+            <div className={'mb-3'}>
                 <h3 className={'mb-3'}>Notes:</h3>
                 <NotesContainer notes={notes}></NotesContainer>
                 <div>

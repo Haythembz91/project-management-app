@@ -85,6 +85,12 @@ const Home = ()=>{
     return (
         <section className={'container-fluid'}>
             <div className={'mb-3'}>
+                <div className="d-flex justify-content-end">
+                    <div className="px-1">
+                        <Link className={'btn fs-2 p-1'} href={'/tasks/'+taskId+'/edit'}><span><FiEdit /></span></Link>
+                    </div>
+                    <DeleteTaskModal projectId={task.project_id as string} taskId={taskId as string} ></DeleteTaskModal>
+                </div>
                 <Link href={'/projects/' + task.project_id}>
                     <IoArrowBackOutline /> Back to project page
                 </Link>
@@ -93,12 +99,6 @@ const Home = ()=>{
                 <div>
                     <h1 className={'mb-3'}>Project: {task.project_name}</h1>
                     <h2>Task: {task.name}</h2>
-                </div>
-                <div className="d-flex">
-                    <div className="px-1">
-                        <Link className={'btn btn-outline-dark'} href={'/tasks/'+taskId+'/edit'}><span><FiEdit /></span> Edit task</Link>
-                    </div>
-                    <DeleteTaskModal projectId={task.project_id as string} taskId={taskId as string} ></DeleteTaskModal>
                 </div>
             </div>
             <div className={'row row-cols-1 row-cols-md-2 mb-3'}>

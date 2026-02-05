@@ -47,13 +47,15 @@ const Home = ()=>{
                     <span>+</span>
                 </Link>
             </div>
-            <div className={'d-none d-md-block'}>
-                    <Link className={'btn btn-outline-dark'} href={'/projects/create'}>
-                        <IoMdAdd /> Add project
-                    </Link>
-            </div>
             <div className={'mb-3'}>
-                <h1 className={'h1 text-center'}>Projects</h1>
+                <div className="d-flex justify-content-between mb-3">
+                    <h1 className={'h1 text-center'}>Projects</h1>
+                    <div className={'d-none d-md-block'}>
+                            <Link className={'btn btn-outline-dark'} href={'/projects/create'}>
+                                <IoMdAdd /> Add project
+                            </Link>
+                    </div>
+                </div>
                 <button
                     className="btn btn-outline-dark d-flex align-items-center gap-2"
                     onClick={() => setCardView((prev) => !prev)}

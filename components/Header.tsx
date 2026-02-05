@@ -6,6 +6,7 @@ import {useState} from "react";
 import GetUser from "@/utils/GetUser";
 import OffCanvas from './OffCanvas';
 import { RxHamburgerMenu } from 'react-icons/rx'
+import { GrClose } from "react-icons/gr";
 
 const Header = ()=>{
 
@@ -80,9 +81,12 @@ const Header = ()=>{
                             </div>
                         }
                     </div>
-                    <button onClick={()=>setShowMenu(p=>!p)} className="d-md-none fs-1 fw-bold text-light hamburgerMenu">
+                    {!showMenu?<button onClick={()=>setShowMenu(p=>!p)} className="d-md-none fs-1 fw-bold text-light hamburgerMenu">
                         <RxHamburgerMenu />
-                    </button>
+                    </button>:
+                    <button onClick={()=>setShowMenu(p=>!p)} className="d-md-none fs-1 fw-bold text-light hamburgerMenu">
+                        <GrClose />
+                    </button>}
                 </div>
                 {showMenu&&<OffCanvas setShowMenu={setShowMenu} user={user} isLoading={isLoading} handleLogout={handleLogout}></OffCanvas>}
             </nav>

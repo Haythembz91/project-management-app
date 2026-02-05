@@ -29,7 +29,7 @@ const DeleteTaskModal = ({projectId,taskId}:{projectId:string,taskId:string})=>{
 
     return(
         <div>
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal" className={'btn bg-danger text-white'}><MdDelete /> Delete Task</button>
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" className={'btn text-danger fs-2 p-1'}><MdDelete /></button>
             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
