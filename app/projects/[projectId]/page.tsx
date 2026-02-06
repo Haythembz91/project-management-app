@@ -89,55 +89,76 @@ const Home = ()=>{
 
     return (
         <div className={'container-fluid'}>
-            <div className="d-flex justify-content-end">
-                    <div className="px-1">
-                        <Link className={'btn fs-2 p-1'} href={'/projects/'+projectId+'/edit'}><FiEdit></FiEdit></Link>
-                    </div>
-                    <Modal projectId={projectId as string}></Modal>
-                </div>
             <div className={'mb-3'}>
-                <Link href={'/projects'}><IoArrowBackOutline /> Back to projects</Link>
+                <Link className="link-dark fst-italic link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={'/projects'}><IoArrowBackOutline /> Back to projects</Link>
                  
             </div>
+            <div className="d-flex justify-content-end">
+                <div className="px-1">
+                    <Link className={'btn fs-2 p-1'} href={'/projects/'+projectId+'/edit'}><FiEdit></FiEdit></Link>
+                </div>
+                <Modal projectId={projectId as string}></Modal>
+            </div>
+            
             <div className={'d-flex justify-content-between align-items-center mb-3'}>
                 <div className="">
                     <h1 className={'m-0'}>{project.name}</h1>
                 </div>
                 
             </div>
-            <div className={'row row-cols-1 row-cols-sm-2 g-4 mb-3'}>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Start: </span>{new Date(project.start_date).toLocaleDateString()}</p>
+            <div className="row row-cols-1 row-cols-sm-2 g-4 mb-3">
+                <div className="col">
+                    <div className="text-muted small">Start</div>
+                    <div className="fw-semibold">
+                    {new Date(project.start_date).toLocaleDateString()}
+                    </div>
                 </div>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Due: </span>{new Date(project.end_date).toLocaleDateString()}</p>
+
+                <div className="col">
+                    <div className="text-muted small">Due</div>
+                    <div className="fw-semibold">
+                    {new Date(project.end_date).toLocaleDateString()}
+                    </div>
                 </div>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Client: </span>{project.client}</p>
+
+                <div className="col">
+                    <div className="text-muted small">Client</div>
+                    <div className="fw-semibold">{project.client}</div>
                 </div>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Location: </span>{project.site}</p>
+
+                <div className="col">
+                    <div className="text-muted small">Location</div>
+                    <div className="fw-semibold">{project.site}</div>
                 </div>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Status: </span><span className={'badge'+' '+statusColor(project.status as status)}>{project.status}</span></p>
+
+                <div className="col">
+                    <div className="text-muted small">Status</div>
+                    <span className={`badge ${statusColor(project.status as status)}`}>
+                    {project.status}
+                    </span>
                 </div>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Budget: </span>${project.budget}</p>
+
+                <div className="col">
+                    <div className="text-muted small">Budget</div>
+                    <div className="fw-semibold">${project.budget}</div>
                 </div>
-                <div className={'col'}>
-                    <p className={'m-0'}><span className="fw-bold">Manager: </span>{project.manager}</p>
+
+                <div className="col">
+                    <div className="text-muted small">Manager</div>
+                    <div className="fw-semibold">{project.manager}</div>
                 </div>
             </div>
             <div className={'col-md-6 mb-3'}>
-                <div className={'col'}>
-                    <p className={''}><span className="fw-bold">Description: </span>{project.description}</p>
+                <div className={'col mb-3'}>
+                    <div className="text-muted small">Description</div>
+                    <div className="fw-semibold">{project.description}</div>
                 </div>
                 <div className={'col'}>
-                    <p className="card-subtitle fw-bold">Progress:</p>
+                    <p className="text-muted small">Progress:</p>
                     <div style={{height:'12px'}} className={'border border-1 rounded-3 overflow-hidden bg-light my-1'}>
                         <p className={'m-0 py-2'} style={{backgroundImage:'linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89))',width:`${project.avg_progress||0}%`}}></p>
                     </div>
-                    <p className={'my-0'}>{Math.round(project.avg_progress)||0}% completed</p>
+                    <p className={'my-0 text-muted small mt-1 fst-italic'}>{Math.round(project.avg_progress)||0}% completed</p>
                 </div>
             </div>
             <div className={'d-md-none create-btn h1 d-flex align-items-center justify-content-center position-fixed bottom-0 end-0 mb-4 me-4'}>
@@ -163,7 +184,7 @@ const Home = ()=>{
             <div className={'mb-3'}>
                 {(tasks&&tasks.length>0)&&<div>
                     <button
-                        className="btn btn-outline-dark d-flex align-items-center gap-2"
+                        className="btn btn-outline-dark d-flex align-items-center gap-2 mb-3"
                         onClick={() => setCardView((prev) => !prev)}
                         aria-label={cardView ? "Switch to table view" : "Switch to card view"}>
                         {cardView ? <MdTableRows size={20} /> : <MdViewModule size={20} />}

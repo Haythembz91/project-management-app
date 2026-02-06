@@ -85,15 +85,15 @@ const Home = ()=>{
     return (
         <section className={'container-fluid'}>
             <div className={'mb-3'}>
+                <Link className="link-dark fst-italic link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href={'/projects/' + task.project_id}>
+                    <IoArrowBackOutline /> Back to project page
+                </Link>
                 <div className="d-flex justify-content-end">
                     <div className="px-1">
                         <Link className={'btn fs-2 p-1'} href={'/tasks/'+taskId+'/edit'}><span><FiEdit /></span></Link>
                     </div>
                     <DeleteTaskModal projectId={task.project_id as string} taskId={taskId as string} ></DeleteTaskModal>
                 </div>
-                <Link href={'/projects/' + task.project_id}>
-                    <IoArrowBackOutline /> Back to project page
-                </Link>
             </div>
             <div className={'d-flex justify-content-between mb-3'}>
                 <div>
@@ -101,23 +101,69 @@ const Home = ()=>{
                     <h2>Task: {task.name}</h2>
                 </div>
             </div>
-            <div className={'row row-cols-1 row-cols-md-2 mb-3'}>
-                <p className={'col'}><span className="fw-bold">Description: </span>{task.description}</p>
-                <p className={'col'}><span className="fw-bold">Priority: </span>{priorityIcon(task.priority)} {task.priority}</p>
-                <div className={'col'}>
-                    <p><span className="fw-bold">Status: </span><span className={'badge'+' '+statusColor(task.status as status)}>{task.status}</span></p>
+            <div className="row row-cols-1 row-cols-md-2 g-4 mb-3">
+                <div className="col">
+                    <div className="text-muted small">Description</div>
+                    <div className="fw-semibold">{task.description}</div>
                 </div>
-                <p className={'col'}><span className="fw-bold">Assigned to: </span>{task.assigned_to}</p>
-                <p className={'col'}><span className="fw-bold">Start date: </span>{new Date(task.task_start_date).toLocaleDateString()}</p>
-                <p className={'col'}><span className="fw-bold">Due date: </span>{new Date(task.task_due_date).toLocaleDateString()}</p>
-                <div className={'col'}>
-                    <p className="fw-bold">Progress:</p>
-                    <div style={{height:'12px'}} className={'border border-1 rounded-3 overflow-hidden bg-light my-1'}>
-                        <p className={'m-0 py-2'} style={{backgroundImage:'linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89))',width:`${task.progress}%`}}></p>
+
+                <div className="col">
+                    <div className="text-muted small">Priority</div>
+                    <div className="fw-semibold d-flex align-items-center gap-2">
+                    {priorityIcon(task.priority)}
+                    {task.priority}
                     </div>
-                    <p className={'my-0'}>{Math.round(task.progress)}% completed</p>
+                </div>
+
+                <div className="col">
+                    <div className="text-muted small">Status</div>
+                    <span className={`badge ${statusColor(task.status as status)}`}>
+                    {task.status}
+                    </span>
+                </div>
+
+                <div className="col">
+                    <div className="text-muted small">Assigned to</div>
+                    <div className="fw-semibold">{task.assigned_to}</div>
+                </div>
+
+                <div className="col">
+                    <div className="text-muted small">Start date</div>
+                    <div className="fw-semibold">
+                    {new Date(task.task_start_date).toLocaleDateString()}
+                    </div>
+                </div>
+
+                <div className="col">
+                    <div className="text-muted small">Due date</div>
+                    <div className="fw-semibold">
+                    {new Date(task.task_due_date).toLocaleDateString()}
+                    </div>
+                </div>
+
+                <div className="col">
+                    <div className="text-muted small mb-1">Progress</div>
+
+                    <div
+                    style={{ height: '12px' }}
+                    className="border border-1 rounded-3 overflow-hidden bg-light"
+                    >
+                    <div
+                        style={{
+                        width: `${task.progress}%`,
+                        height: '100%',
+                        backgroundImage:
+                            'linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89))',
+                        }}
+                    />
+                    </div>
+
+                    <div className="text-muted small mt-1 fst-italic">
+                    {Math.round(task.progress)}% completed
+                    </div>
                 </div>
             </div>
+
             <div className={'my-3'}>
                 <h3 className={'mb-3'}>Notes:</h3>
                 <NotesContainer notes={notes}></NotesContainer>

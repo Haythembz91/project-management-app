@@ -30,7 +30,7 @@ const NotesContainer = ({notes}:{notes:Note[]|null})=>{
             {sortedNotes.map(note=>(<div className={'d-flex'} key={note.id}>
                 <div className={'border-bottom'}>
                     <div className={'d-md-flex'}>
-                        <p className={'my-0'}><FaUser/><span className={'px-2'}>{note.username}</span></p>
+                        <p className={'my-0'}><FaUser className="text-muted" /><span className={'px-2'}>{note.username}</span></p>
                         <p className={'text-secondary ps-3 ps-md-0 fst-italic'}>{'(' + note.email + ')' + ' - ' + postTime(note.created_at)}</p>
                     </div>
                     <div>

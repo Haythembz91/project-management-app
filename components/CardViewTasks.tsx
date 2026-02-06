@@ -18,7 +18,7 @@ const CardViewTasks = ({tasks}:{tasks:Tasks[]|null})=>{
     return (
         <div className="row m-0 g-2 row-cols-1 row-cols-md-3 row-cols-lg-4">
             {tasks.map(task => (
-                <div className="col" key={task.id}>
+                <div className="col mt-0 mb-3" key={task.id}>
                     <Link href={'/tasks/' + task.id} className={'text-decoration-none text-dark'}>
                         <div className={'border shadow-card rounded-2 p-2 h-100'}>
                             <div className={'d-flex justify-content-between mb-1'}>
