@@ -52,12 +52,12 @@ const Header = ()=>{
                             <li className={'nav-item'}>
                                 <Link className={'nav-link text-light p-1 fw-bold'} href={'/tasks'}>Tasks</Link>
                             </li>
-                            <li className={'nav-item'}>
+                            {/* <li className={'nav-item'}>
                                 <Link className={'nav-link text-light p-1 fw-bold'} href={'/reports'}>Reports</Link>
                             </li>
                             <li className={'nav-item'}>
                                 <Link className={'nav-link text-light p-1 fw-bold'} href={'/notifications'}>Notifications</Link>
-                            </li>
+                            </li> */}
                         </ul>
                         {user?<div className={'d-flex align-content-center'}>
                                 <div className={'px-2 d-flex align-content-center'}>

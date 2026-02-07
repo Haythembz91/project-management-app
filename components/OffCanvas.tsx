@@ -18,12 +18,12 @@ const OffCanvas = ({user,handleLogout,isLoading,setShowMenu}:{user:User|null,han
                 <li className='text-center fw-bold fs-5'>
                     <Link onClick={()=>setShowMenu(false)} className='link-light link-offset-2 link-underline link-underline-opacity-0' href={'/tasks'}>Tasks</Link>
                 </li>
-                <li className='text-center fw-bold fs-5'>
+                {/* <li className='text-center fw-bold fs-5'>
                     <Link onClick={()=>setShowMenu(false)} className='link-light link-offset-2 link-underline link-underline-opacity-0' href={'/reports'}>Reports</Link>
                 </li>
                 <li className='text-center fw-bold fs-5'>
                     <Link onClick={()=>setShowMenu(false)} className='link-light link-offset-2 link-underline link-underline-opacity-0' href={'/notifications'}>Notifications</Link>
-                </li>
+                </li> */}
             </ul>
             <div className='mt-3'>
                 {user?<div className={'d-flex flex-column align-items-center'}>

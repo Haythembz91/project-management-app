@@ -167,7 +167,7 @@ const Home = ()=>{
                 </Link>
             </div>
             <div className={'mb-3'}>
-                <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/chart'}>
+                <Link className={'gradBtn'} href={'/projects/'+projectId+'/chart'}>
                     <FaChartGantt /> Chart
                 </Link>
             </div>
@@ -175,7 +175,7 @@ const Home = ()=>{
                 <div className="d-flex justify-content-between">
                     <h3 className={'h3 mb-3'}>Tasks:</h3>
                     <div className={'d-none d-md-block mb-3'}>
-                        <Link className={'btn btn-outline-dark'} href={'/projects/'+projectId+'/tasks/create'}>
+                        <Link className={'gradBtn'} href={'/projects/'+projectId+'/tasks/create'}>
                             <IoMdAdd /> Add task
                         </Link>
                     </div>
@@ -184,7 +184,7 @@ const Home = ()=>{
             <div className={'mb-3'}>
                 {(tasks&&tasks.length>0)&&<div>
                     <button
-                        className="btn btn-outline-dark d-flex align-items-center gap-2 mb-3"
+                        className="gradBtn d-flex align-items-center gap-2 mb-3"
                         onClick={() => setCardView((prev) => !prev)}
                         aria-label={cardView ? "Switch to table view" : "Switch to card view"}>
                         {cardView ? <MdTableRows size={20} /> : <MdViewModule size={20} />}
@@ -205,8 +205,8 @@ const Home = ()=>{
                         {error&&<div className="alert alert-danger mb-3" role="alert">
                             {error}
                         </div>}
-                        {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>Post</button>:
-                            <button className="btn btn-outline-dark w-100" type="button" disabled>
+                        {!isLoading?<button className={'gradBtn col-12'} type={'submit'}>Post</button>:
+                            <button className="gradBtn opacity-50 w-100" type="button" disabled>
                                 <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                 <span className={'px-1'} role="status">Posting...</span>
                             </button>}

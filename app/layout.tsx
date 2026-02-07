@@ -7,8 +7,11 @@ import Bootstrap from "@/scripts/Bootstrap";
 import {UserProvider} from "@/contexts/UserContext";
 import { Analytics } from "@vercel/analytics/next"
 export const metadata: Metadata = {
-  title: "Construction Project Management App",
-  description: "Construction Project Management App",
+  title: "Project Management App",
+  description: "Project Management App",
+  icons:{
+    icon:"https://res.cloudinary.com/dmgfsayir/image/upload/v1770070255/ChatGPT_Image_Feb_2_2026_11_06_15_PM-modified_pioxta.png"
+  }
 };
 
 export default function RootLayout({
