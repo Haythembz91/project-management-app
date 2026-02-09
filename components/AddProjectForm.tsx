@@ -142,8 +142,8 @@ const AddProjectForm = ()=>{
                 {error&&<div className="alert alert-danger mb-3" role="alert">
                     {error}
                 </div>}
-                {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>{projectId?'Update project':'Add project'}</button>:
-                    <button className="btn btn-outline-dark w-100" type="button" disabled>
+                {!isLoading?<button className={'gradBtn col-12'} type={'submit'}>{projectId?'Update project':'Add project'}</button>:
+                    <button className="gradBtn w-100" type="button" disabled>
                         <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
                         <span className={'px-1'} role="status">{projectId?'Updating project...':'Adding project...'}</span>
                     </button>}

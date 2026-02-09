@@ -137,8 +137,8 @@ const AddTasksForm = ()=>{
                 {error&&<div className="alert alert-danger mb-3" role="alert">
                     {error}
                 </div>}
-                {!isLoading?<button className={'btn btn-outline-dark col-12'} type={'submit'}>{taskId?'Update task':'Add task'}</button>:
-                    <button className="btn btn-outline-dark w-100" type="button" disabled>
+                {!isLoading?<button className={'gradBtn col-12'} type={'submit'}>{taskId?'Update task':'Add task'}</button>:
+                    <button className="gradBtn w-100" type="button" disabled>
                         <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
                         <span className={'px-1'} role="status">{taskId?'Updating task...':'Adding task...'}</span>
                     </button>}
