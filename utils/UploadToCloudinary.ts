@@ -5,8 +5,7 @@ const UploadToCloudinary = async (file: File, folder: string) => {
     if (!(file instanceof File)) throw new Error("Invalid file");
 
     const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-        
+    const buffer = Buffer.from(arrayBuffer);   
     return new Promise ((resolve, reject) => {
         cloudinary.uploader.upload_stream(
             {
@@ -18,7 +17,7 @@ const UploadToCloudinary = async (file: File, folder: string) => {
                 if (error)
                     return reject(error);
                 else 
-                    resolve({url: result!.secure_url})
+                    resolve({url: result!.secure_url, resource_type: result!.resource_type});
             }
         ).end(buffer);
     });
