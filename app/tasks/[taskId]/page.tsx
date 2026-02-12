@@ -20,7 +20,6 @@ const Home = ()=>{
     const [notes,setNotes] = React.useState<Note[]|null>(null)
     const [error,setError] = React.useState<string>('')
     const [isLoading,setIsLoading] = React.useState<boolean>(false)
-    const [isDeleting,setIsDeleting] = React.useState<boolean>(false)
     const formRef = React.useRef<HTMLFormElement>(null)
 
 
@@ -62,7 +61,37 @@ const Home = ()=>{
         }
     }
 
-    
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>)=>{
+        
+        const file = e.target.files
+        if(!file){
+            return
+        }
+        const formData = new FormData()
+        Array.from(file).forEach(f=>formData.append('file',f))
+        formData.append('task_id',taskId as string)
+        try{
+            const response = await FetchWithAuth('/api/media/upload',{
+                method:'POST',
+                body:formData
+            })
+            if(!response.ok){
+                if(response.status===401){
+                    window.location.href = '/auth/login'
+                    return
+                }
+                const data = await response.json()
+                console.log(data.error)
+                return
+            }
+            const data = await response.json()
+            console.log(data.message)
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+
     useEffect(()=>{
         const fetchTask = async()=>{
             const result = await getTask(taskId as string)
@@ -161,6 +190,17 @@ const Home = ()=>{
                     <div className="text-muted small mt-1 fst-italic">
                     {Math.round(task.progress)}% completed
                     </div>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <form>
+                        <div className="mb-3">
+                            <label htmlFor="formFile" className="form-label"></label>
+                            <input className="form-control" type="file" id="formFile" onChange={handleUpload} multiple></input>
+                        </div>
+                    </form>
                 </div>
             </div>
 

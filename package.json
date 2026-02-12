@@ -13,6 +13,7 @@
     "@vercel/analytics": "^1.5.0",
     "bcrypt": "^6.0.0",
     "bootstrap": "^5.3.7",
+    "cloudinary": "^2.9.0",
     "jose": "^6.0.12",
     "jsonwebtoken": "^9.0.2",
     "next": "15.4.10",
@@ -20,7 +21,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-frappe-gantt": "^0.2.3",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
