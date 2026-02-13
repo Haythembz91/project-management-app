@@ -2,7 +2,7 @@
 import FetchWithAuth from "@/utils/FetchWithAuth";
 import {useEffect, useRef, useState, FormEvent, ChangeEvent} from "react";
 import {useParams} from "next/navigation";
-import {Note, Tasks} from "@/libs/interfaces";
+import {Attachment, Note, Tasks} from "@/libs/interfaces";
 import {IoArrowBackOutline} from "react-icons/io5";
 import Link from "next/link";
 import {priorityIcon} from "@/utils/PriorityIcon";
@@ -23,7 +23,7 @@ const Home = ()=>{
     const [error,setError] = useState<string>('')
     const [isLoading,setIsLoading] = useState<boolean>(false)
     const formRef = useRef<HTMLFormElement>(null)
-    const [attachments,setAttachments] = useState<string[]>([])
+    const [attachments,setAttachments] = useState<Attachment[]>([])
     const [isUploading,setIsUploading] = useState<boolean>(false)
 
 

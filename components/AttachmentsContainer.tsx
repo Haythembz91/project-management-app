@@ -1,6 +1,6 @@
+import { Attachment } from "@/libs/interfaces"
 
-
-const AttachmentsContainer = ({attachments}:{attachments:{id:string,url:string,resource_type:string}[]}) => {
+const AttachmentsContainer = ({attachments}:{attachments:Attachment[]}) => {
     console.log(attachments)
     return (
         <div className={'d-md-flex'}>

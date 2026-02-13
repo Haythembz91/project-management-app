@@ -59,3 +59,11 @@ export interface Note{
     username:string;
     email:string;
 }
+
+export interface Attachment{
+    id:string;
+    task_id:string;
+    created_at:string;
+    url:string;
+    resource_type:string
+}
