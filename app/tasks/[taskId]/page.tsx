@@ -1,6 +1,6 @@
 'use client'
 import FetchWithAuth from "@/utils/FetchWithAuth";
-import React, {useEffect} from "react";
+import {useEffect, useRef, useState, FormEvent, ChangeEvent} from "react";
 import {useParams} from "next/navigation";
 import {Note, Tasks} from "@/libs/interfaces";
 import {IoArrowBackOutline} from "react-icons/io5";
@@ -12,18 +12,22 @@ import NotesContainer from "@/components/NotesContainer";
 import getTask from "@/utils/GetTask";
 import DeleteTaskModal from "@/components/DeleteTaskModal";
 import { FiEdit } from "react-icons/fi";
+import AttachmentsContainer from "@/components/AttachmentsContainer";
+import getAttachments from "@/utils/getAttachments";
 
 const Home = ()=>{
 
     const {taskId} = useParams()
-    const [task,setTask] = React.useState<Tasks|null>(null)
-    const [notes,setNotes] = React.useState<Note[]|null>(null)
-    const [error,setError] = React.useState<string>('')
-    const [isLoading,setIsLoading] = React.useState<boolean>(false)
-    const formRef = React.useRef<HTMLFormElement>(null)
+    const [task,setTask] = useState<Tasks|null>(null)
+    const [notes,setNotes] = useState<Note[]|null>(null)
+    const [error,setError] = useState<string>('')
+    const [isLoading,setIsLoading] = useState<boolean>(false)
+    const formRef = useRef<HTMLFormElement>(null)
+    const [attachments,setAttachments] = useState<string[]>([])
+    const [isUploading,setIsUploading] = useState<boolean>(false)
 
 
-    const handlePost = async(e: React.FormEvent<HTMLFormElement>)=>{
+    const handlePost = async(e: FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         setError('')
         setIsLoading(true)
@@ -61,8 +65,8 @@ const Home = ()=>{
         }
     }
 
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>)=>{
-        
+    const handleUpload = async (e: ChangeEvent<HTMLInputElement>)=>{
+        setIsUploading(true)
         const file = e.target.files
         if(!file){
             return
@@ -85,12 +89,22 @@ const Home = ()=>{
                 return
             }
             const data = await response.json()
+            getAttachments(taskId as string).then(p=>setAttachments(p))
             console.log(data.message)
         }catch(e){
             console.log(e)
+        }finally{
+            setIsUploading(false)
         }
     }
 
+    useEffect(()=>{
+        const fetchAttachments = async()=>{
+            const result = await getAttachments(taskId as string)
+            setAttachments(result)
+        }
+        fetchAttachments().then().catch()
+    },[])
 
     useEffect(()=>{
         const fetchTask = async()=>{
@@ -110,7 +124,7 @@ const Home = ()=>{
             </div>
         )
     }
-
+    
     return (
         <section className={'container-fluid'}>
             <div className={'mb-3'}>
@@ -201,6 +215,10 @@ const Home = ()=>{
                             <input className="form-control" type="file" id="formFile" onChange={handleUpload} multiple></input>
                         </div>
                     </form>
+                </div>
+                <div>
+                    <h3 className={'mb-3'}>Attachments:</h3>
+                    <AttachmentsContainer attachments={attachments}></AttachmentsContainer>
                 </div>
             </div>
 
