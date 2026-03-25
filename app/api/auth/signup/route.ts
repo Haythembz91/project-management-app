@@ -34,7 +34,7 @@ export async function POST (req:NextRequest){
     }
     const email = formData.get('email')?.toString().trim().toLowerCase()
     const password = formData.get('password')?.toString()
-    const confirmPassword = formData.get('confirmPassword')?.toString()
+    const confirmPassword = formData.get('password-confirm')?.toString()
     const username = formData.get('username')?.toString().trim()
     if(!password||!isPasswordValid(password as string)){
         return NextResponse.json({error:"Invalid password"},{status:422})

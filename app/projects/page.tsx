@@ -34,7 +34,7 @@ const Home = ()=>{
         return (
                 <div className={'d-flex justify-content-between p-3'}>
                     <p className={'h4 mx-2'}>No projects found</p>
-                    <Link className={'btn btn-outline-dark'} href={'/projects/create'}>
+                    <Link className={'gradBtn'} href={'/projects/create'}>
                         <IoMdAdd /> Add project
                     </Link>
                 </div>

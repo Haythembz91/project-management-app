@@ -65,5 +65,6 @@ export interface Attachment{
     task_id:string;
     created_at:string;
     url:string;
-    resource_type:string
+    resource_type:string;
+    display_name:string
 }

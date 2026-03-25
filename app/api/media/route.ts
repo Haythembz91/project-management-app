@@ -13,7 +13,6 @@ export async function GET (req:NextRequest) {
     }
     const { searchParams } = new URL(req.url);
     const taskId = searchParams.get("taskId");
-    console.log(taskId)
     try{
         const result = await pool.query('SELECT * FROM task_media WHERE task_id = $1', [taskId])
         return NextResponse.json(result.rows)

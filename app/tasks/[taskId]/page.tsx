@@ -14,7 +14,7 @@ import DeleteTaskModal from "@/components/DeleteTaskModal";
 import { FiEdit } from "react-icons/fi";
 import AttachmentsContainer from "@/components/AttachmentsContainer";
 import getAttachments from "@/utils/getAttachments";
-
+import { IoCloudUploadSharp } from "react-icons/io5"; 
 const Home = ()=>{
 
     const {taskId} = useParams()
@@ -209,15 +209,22 @@ const Home = ()=>{
 
             <div>
                 <div>
-                    <form>
-                        <div className="mb-3">
-                            <label htmlFor="formFile" className="form-label"></label>
-                            <input className="form-control" type="file" id="formFile" onChange={handleUpload} multiple></input>
-                        </div>
-                    </form>
-                </div>
-                <div>
-                    <h3 className={'mb-3'}>Attachments:</h3>
+                    <h3 className={'mb-3'}>Media Center:</h3>
+                    <div className="d-flex justify-content-end">
+                        <form>
+                            <label htmlFor="formFile" className="uploadBtn mb-3 p-2 d-inline-flex align-items-center justify-content-center">
+                                <IoCloudUploadSharp className="fs-1" />
+                                <span className="ms-2">Upload files</span>
+                                <input 
+                                className="d-none" 
+                                type="file" 
+                                id="formFile" 
+                                onChange={handleUpload} 
+                                multiple 
+                                />
+                            </label>
+                        </form>
+                    </div>
                     <AttachmentsContainer attachments={attachments}></AttachmentsContainer>
                 </div>
             </div>

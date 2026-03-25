@@ -22,10 +22,10 @@ export async function POST (req:NextRequest) {
     try{
         const assets = await Promise.all(files.map(file=>{
         return UploadToCloudinary(file as File,'project management app/files/'+'task_'+task_id+'/' as string)
-    })) as {url:string,resource_type:string}[]
+    })) as {url:string,resource_type:string, display_name:string}[]
 
     assets.forEach((asset) =>{
-        const result = pool.query("INSERT INTO task_media (url,task_id,resource_type) VALUES ($1,$2,$3)",[asset.url,task_id,asset.resource_type])
+        const result = pool.query("INSERT INTO task_media (url,task_id,resource_type, display_name) VALUES ($1,$2,$3,$4)",[asset.url,task_id,asset.resource_type,asset.display_name])
     })
 
     return NextResponse.json({message:'Files uploaded successfully'})

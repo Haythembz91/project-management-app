@@ -73,3 +73,17 @@ header{
 .gradBtn:hover{
     background:linear-gradient(135deg,rgb(243, 70, 102) 20%,rgb(136, 2, 51));
 }
+
+.uploadBtn{
+    border: none;
+    background:linear-gradient(135deg,rgb(255,56,92) 20%,rgb(189,30,89));
+    border-radius: 10px;
+    color:white;
+    font-weight: 700;
+    padding: 0px 8px;
+    cursor: pointer;
+}
+
+.uploadBtn:hover{
+    background:linear-gradient(135deg,rgb(243, 70, 102) 20%,rgb(136, 2, 51));
+}
