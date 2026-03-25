@@ -212,6 +212,11 @@ const Home = ()=>{
                     <h3 className={'mb-3'}>Media Center:</h3>
                     <div className="d-flex justify-content-end">
                         <form>
+                            {isUploading?
+                            <button className="uploadBtn mb-3 p-2" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                                <span role="status">Uploading...</span>
+                            </button>:
                             <label htmlFor="formFile" className="uploadBtn mb-3 p-2 d-inline-flex align-items-center justify-content-center">
                                 <IoCloudUploadSharp className="fs-1" />
                                 <span className="ms-2">Upload files</span>
@@ -222,7 +227,7 @@ const Home = ()=>{
                                 onChange={handleUpload} 
                                 multiple 
                                 />
-                            </label>
+                            </label>}
                         </form>
                     </div>
                     <AttachmentsContainer attachments={attachments}></AttachmentsContainer>
